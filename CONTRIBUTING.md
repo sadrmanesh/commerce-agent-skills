@@ -43,6 +43,10 @@ Use a focused branch. The pull request should say what changed and how you ran t
 
 Keep authorship on the contributor and the repository copyright holder. Do not add product-specific agent configuration directories.
 
+## Mirrors
+
+`.github/workflows/mirror.yml` pushes `main` and every tag to `gitlab.com/sadrmanesh/commerce-agent-skills`. It runs only when the `GITLAB_TOKEN` repository secret is set (a GitLab access token with the `write_repository` scope) and skips with a notice otherwise. Set the `GITLAB_NAMESPACE` repository variable to mirror to another GitLab namespace. GitHub stays the main repository for issues and pull requests.
+
 ## Reporting issues
 
 Use the bug or feature templates. A bug report for a skill should name the skill and the API or UI behavior that disagrees with the text.

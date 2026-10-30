@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- `.github/workflows/mirror.yml`, which mirrors `main` and tags to `gitlab.com/sadrmanesh/commerce-agent-skills` when the `GITLAB_TOKEN` secret is set, and skips cleanly otherwise.
+
 ## [0.3.1] - 2026-10-30
 
 ### Added
