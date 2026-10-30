@@ -4,6 +4,7 @@
 
 ### Added
 
+- The skills, rules, and evaluation tasks as a Hugging Face dataset, <https://huggingface.co/datasets/sadrmanesh/commerce-agent-skills>, with a `skills` table, an `evals` table, and the installable folders. The README, the docs home page, and the installation guide link to it.
 - `.github/workflows/mirror.yml`, which mirrors `main` and tags to `gitlab.com/sadrmanesh/commerce-agent-skills` when the `GITLAB_TOKEN` secret is set, and skips cleanly otherwise.
 
 ## [0.3.1] - 2026-10-30

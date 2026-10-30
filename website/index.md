@@ -12,6 +12,7 @@ hide:
 
 [Get started](getting-started.md){ .md-button .md-button--primary }
 [Browse the skills](skills/index.md){ .md-button }
+[Hugging Face dataset](https://huggingface.co/datasets/sadrmanesh/commerce-agent-skills){ .md-button }
 [GitHub](https://github.com/sadrmanesh/commerce-agent-skills){ .md-button }
 
 ```bash
