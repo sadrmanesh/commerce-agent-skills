@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    {
+      "id": "add-to-cart-announcement",
+      "task": "The add-to-cart button updates a mini-cart badge with JavaScript. Make the result accessible to screen reader and keyboard users.",
+      "expects": {
+        "must_include": ["<button>", "role=\"status\"", "focus"],
+        "must_not_include": ["<div onclick"]
+      }
+    },
+    {
+      "id": "checkout-errors",
+      "task": "Review a checkout form whose fields use placeholders as labels and show errors only as red borders. List the fixes.",
+      "expects": {
+        "must_include": ["<label>", "autocomplete", "aria-invalid", "contrast"],
+        "must_not_include": ["placeholder is enough"]
+      }
+    }
+  ]
+}

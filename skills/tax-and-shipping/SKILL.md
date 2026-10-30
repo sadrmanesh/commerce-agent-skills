@@ -4,7 +4,7 @@ description: "Calculate tax and shipping from the destination and the store's co
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Tax and shipping
@@ -55,3 +55,7 @@ WooCommerce mapping is in [the WooCommerce notes](references/woocommerce.md). Wo
 - An order stores tax lines that add up to the tax total, in the order currency.
 - Changing the address on checkout updates the quoted shipping and tax before payment.
 - A historical order keeps its original tax amounts after you edit the live rate table.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

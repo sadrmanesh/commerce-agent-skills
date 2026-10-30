@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    {
+      "id": "reserve-last-unit",
+      "task": "Two shoppers check out the last unit of a SKU at the same time. Write the stock reservation so only one succeeds.",
+      "expects": {
+        "must_include": ["reserved", "available", "conditional update"],
+        "must_not_include": ["SELECT stock_quantity then UPDATE"]
+      }
+    },
+    {
+      "id": "split-order",
+      "task": "An order has two lines. Warehouse A has both items, warehouse B is closer but has only one. Decide the allocation and explain the policy.",
+      "expects": {
+        "must_include": ["one location", "split", "allocation"],
+        "must_not_include": ["always split"]
+      }
+    }
+  ]
+}

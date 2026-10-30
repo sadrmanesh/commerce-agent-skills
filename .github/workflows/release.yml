@@ -1,55 +1,113 @@
 name: Release
 
 on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
     inputs:
       version:
-        description: Version to tag. Must match package.json, for example 0.2.0
+        description: Version to tag and publish. Must match package.json, for example 0.3.0
         required: true
         type: string
 
 permissions:
   contents: write
+  id-token: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   release:
-    name: Tag release
+    name: Release and publish to npm
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          registry-url: https://registry.npmjs.org
 
-      - name: Check the requested version
+      - name: Resolve the version
+        id: version
         env:
           REQUESTED_VERSION: ${{ inputs.version }}
-        run: node --input-type=module -e "import { readFileSync } from 'node:fs'; const version = process.env.REQUESTED_VERSION; if (!/^[0-9]+\\.[0-9]+\\.[0-9]+$/.test(version)) { console.error('Version must look like 0.2.0'); process.exit(1); } const pkg = JSON.parse(readFileSync('package.json', 'utf8')).version; if (pkg !== version) { console.error('package.json is ' + pkg); process.exit(1); }"
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="${REQUESTED_VERSION#v}"
+          fi
+          if ! [[ "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Version must look like 0.3.0" >&2
+            exit 1
+          fi
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "${pkg}" != "${version}" ]; then
+            echo "package.json is ${pkg}, not ${version}" >&2
+            exit 1
+          fi
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
 
       - name: Validate skills and tests
         run: |
           node scripts/validate-skills.mjs
           node scripts/generate-catalog.mjs --check
+          node scripts/run-evals.mjs
           node --test
-          node scripts/build-docs.mjs --out site
 
-      - name: Tag and create the GitHub release
+      - name: Check the package contents
+        run: npm pack --dry-run
+
+      - name: Tag the release
+        if: github.ref_type != 'tag'
         env:
-          GH_TOKEN: ${{ github.token }}
-          REQUESTED_VERSION: ${{ inputs.version }}
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           set -euo pipefail
-          version="$REQUESTED_VERSION"
-          git fetch origin --tags
-          if git rev-parse "refs/tags/v${version}" >/dev/null 2>&1; then
-            echo "Tag v${version} already exists"
+          if git rev-parse "refs/tags/v${VERSION}" >/dev/null 2>&1; then
+            echo "Tag v${VERSION} already exists" >&2
             exit 1
           fi
           git config user.name "Naser Sadrmanesh"
           git config user.email "info.sadrmanesh@gmail.com"
-          git tag -a "v${version}" -m "v${version}"
-          git push origin "v${version}"
-          gh release create "v${version}" --title "v${version}" --notes "See CHANGELOG.md for ${version}."
+          git tag -a "v${VERSION}" -m "v${VERSION}"
+          git push origin "v${VERSION}"
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          if gh release view "v${VERSION}" >/dev/null 2>&1; then
+            echo "Release v${VERSION} already exists"
+            exit 0
+          fi
+          awk -v v="${VERSION}" '/^## /{p=($0 ~ ("(^|[^0-9.])" v "([^0-9.]|$)")); next} /^\[[^]]+\]: /{next} p' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then echo "See CHANGELOG.md for ${VERSION}." > release-notes.md; fi
+          gh release create "v${VERSION}" --title "v${VERSION}" --notes-file release-notes.md --verify-tag
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+            echo "::warning::NPM_TOKEN is not set; skipping npm publish."
+            exit 0
+          fi
+          name="$(node -p "require('./package.json').name")"
+          if npm view "${name}@${VERSION}" version >/dev/null 2>&1; then
+            echo "${name}@${VERSION} is already on npm"
+            exit 0
+          fi
+          npm publish --access public --provenance

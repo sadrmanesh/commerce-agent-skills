@@ -28,6 +28,9 @@ jobs:
       - name: Check the generated README catalog
         run: node scripts/generate-catalog.mjs --check
 
+      - name: Score the worked examples
+        run: node scripts/run-evals.mjs
+
       - name: Run tests
         run: node --test
 

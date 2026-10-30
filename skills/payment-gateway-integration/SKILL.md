@@ -4,7 +4,7 @@ description: "Integrate a payment provider with idempotent charges, signature-ch
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Payment gateway integration
@@ -67,7 +67,7 @@ Show a pending confirmation when the webhook has not arrived yet. Poll your own 
 
 - Webhook secrets and API keys stay in the server environment.
 - Log the order id, provider payment id, event id, and your decision. Do not log the PAN, CVV, full card number, or the webhook secret.
-- Verify signatures on the raw request body before parsing. The order and webhook skill includes a WooCommerce HMAC checker. For other providers, follow that provider's documented MAC and compare with a constant-time compare.
+- Verify signatures on the raw body of the request before parsing. The order and webhook skill includes a WooCommerce HMAC checker. For other providers, follow that provider's documented MAC and compare with a constant-time compare.
 
 ## Gotchas
 

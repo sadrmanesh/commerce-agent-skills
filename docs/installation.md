@@ -2,16 +2,19 @@
 
 commerce-agent-skills uses the [Agent Skills](https://agentskills.io/specification) layout. The specification defines the folder and the `SKILL.md` file. It does not define a single directory where every agent looks. Install the folders into the skills location your agent documents, then reload the session if that agent caches the skill list at startup.
 
-## Install with the command
+## Install with npx
 
-From a checkout of this repository:
+The library is published on npm as `@sadrmanesh/commerce-agent-skills`. Run it from the root of your project:
 
 ```bash
-node bin/commerce-agent-skills.mjs list
-node bin/commerce-agent-skills.mjs add woocommerce-rest-api --dir /path/to/agent-skills
+npx @sadrmanesh/commerce-agent-skills list
+npx @sadrmanesh/commerce-agent-skills init
+npx @sadrmanesh/commerce-agent-skills add woocommerce-rest-api stripe-payments
 ```
 
-The package name is `commerce-agent-skills`. It is not published yet. After a publish, `npx commerce-agent-skills add <skill> --dir <path>` is the same command. See [cli.md](cli.md).
+`init` copies every skill to `.agents/skills/` and every rule to `.agents/rules/`. `add` copies only the skills you name. Use `--layout root` for `skills/` and `rules/` at the project root, or `--skills-dir` and `--rules-dir` for the directories your agent documents. See [cli.md](cli.md) for every option.
+
+From a checkout of this repository, `node bin/commerce-agent-skills.mjs` takes the same arguments.
 
 ## Install one skill
 
@@ -49,4 +52,4 @@ That checks frontmatter, the directory name, linked files, and the matching rule
 
 ## Updates
 
-Replace the skill directory with the newer copy and keep the directory name. Read [CHANGELOG.md](../CHANGELOG.md) before overwriting a skill you have edited locally.
+Run `npx @sadrmanesh/commerce-agent-skills@latest init` to add skills that are new in a release. To refresh skills you already installed, run `add <skill> --force`, which replaces the whole skill directory. Without the command, replace the skill directory with the newer copy and keep the directory name. Read [CHANGELOG.md](../CHANGELOG.md) before overwriting a skill you have edited locally.

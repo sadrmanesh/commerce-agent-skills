@@ -5,6 +5,28 @@ import { assertSpecFrontmatter, parseFrontmatter, splitFrontmatter } from "./fro
 export const SKILL_LINE_LIMIT = 500;
 export const RULE_LINE_MIN = 8;
 export const RULE_LINE_MAX = 80;
+export const DESCRIPTION_MIN = 100;
+export const DESCRIPTION_MAX = 320;
+export const REQUIRED_SECTIONS = ["Gotchas", "Verification", "Evaluation"];
+export const EM_DASH = "\u2014";
+export const ZWNJ = "\u200c";
+
+export async function readPackageVersion(root) {
+  const pkg = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"));
+  if (typeof pkg.version !== "string") {
+    throw new Error("package.json has no version");
+  }
+  return pkg.version;
+}
+
+export function firstHeading(markdown) {
+  const match = /^#\s+(.+?)\s*$/m.exec(markdown);
+  return match ? match[1] : null;
+}
+
+export function sectionTitles(markdown) {
+  return [...markdown.matchAll(/^##\s+(.+?)\s*$/gm)].map((match) => match[1]);
+}
 
 export async function loadRepository(root) {
   const skillsDir = path.join(root, "skills");
@@ -42,7 +64,7 @@ export async function loadRepository(root) {
   return { root, skillsDir, rulesDir, order, skills };
 }
 
-export function validateSkillRecord(skill) {
+export function validateSkillRecord(skill, expectedVersion) {
   const errors = [];
   const prefix = skill.name;
 
@@ -60,8 +82,14 @@ export function validateSkillRecord(skill) {
   if (typeof skill.data.name === "string" && skill.data.name !== skill.name) {
     errors.push(`${prefix}: name "${skill.data.name}" must match the directory name`);
   }
-  if (typeof skill.data.description === "string" && !skill.data.description.includes("Use when")) {
-    errors.push(`${prefix}: description must say when to use the skill by including "Use when"`);
+  if (typeof skill.data.description === "string") {
+    if (!skill.data.description.includes("Use when")) {
+      errors.push(`${prefix}: description must say when to use the skill by including "Use when"`);
+    }
+    const length = skill.data.description.length;
+    if (length < DESCRIPTION_MIN || length > DESCRIPTION_MAX) {
+      errors.push(`${prefix}: description has ${length} characters; keep it between ${DESCRIPTION_MIN} and ${DESCRIPTION_MAX}`);
+    }
   }
   if (skill.data.license !== "MIT") {
     errors.push(`${prefix}: license must be MIT`);
@@ -71,8 +99,10 @@ export function validateSkillRecord(skill) {
   if (author !== "Naser Sadrmanesh") {
     errors.push(`${prefix}: metadata.author must be "Naser Sadrmanesh"`);
   }
-  if (version !== "0.2.0") {
-    errors.push(`${prefix}: metadata.version must be "0.2.0"`);
+  if (expectedVersion !== undefined && version !== expectedVersion) {
+    errors.push(`${prefix}: metadata.version must be "${expectedVersion}" to match package.json`);
+  } else if (typeof version !== "string" || !/^\d+\.\d+\.\d+$/.test(version)) {
+    errors.push(`${prefix}: metadata.version must be a quoted x.y.z string`);
   }
   if (skill.lineCount > SKILL_LINE_LIMIT) {
     errors.push(`${prefix}: SKILL.md has ${skill.lineCount} lines; keep it at or under ${SKILL_LINE_LIMIT}`);
@@ -82,6 +112,15 @@ export function validateSkillRecord(skill) {
   }
   if (skill.body.trim().length < 200) {
     errors.push(`${prefix}: body is too short to be a usable skill`);
+  }
+  const sections = sectionTitles(skill.body);
+  for (const required of REQUIRED_SECTIONS) {
+    if (!sections.includes(required)) {
+      errors.push(`${prefix}: SKILL.md needs a "## ${required}" section`);
+    }
+  }
+  if (skill.text.includes(EM_DASH)) {
+    errors.push(`${prefix}: SKILL.md uses an em dash; use a comma, colon, or period`);
   }
 
   return errors;

@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The event checker requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Conversion event tracking
@@ -58,3 +58,7 @@ The thank-you page may render the event only if a reload will send the same `tra
 - A declined payment does not emit `purchase`.
 - Reloading the confirmation page does not create a second transaction id.
 - Item ids on variant products are variant SKUs.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

@@ -182,11 +182,13 @@ async function skillPage(repoRoot, skill, category, resolve) {
     "",
     indent(
       [
-        "Copy the skill folder into a directory your agent scans:",
+        "Copy the skill and its rule into your project:",
         "",
         "```bash",
-        `node bin/commerce-agent-skills.mjs add ${skill.name} --dir ./agent-skills --with-rule`,
+        `npx @sadrmanesh/commerce-agent-skills add ${skill.name}`,
         "```",
+        "",
+        "The skill goes to `.agents/skills/` and the rule to `.agents/rules/`. See [Command line](../../guides/cli.md) for other directories.",
       ].join("\n"),
     ),
     "",

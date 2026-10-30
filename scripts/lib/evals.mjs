@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const TASK_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -19,7 +19,37 @@ export function checkAnswer(answer, expects) {
   return errors;
 }
 
-export async function validateSkillEvals(skill) {
+/** Scores one answer: each must_include and must_not_include entry is one check. */
+export function scoreAnswer(answer, expects) {
+  const total = (expects?.must_include?.length ?? 0) + (expects?.must_not_include ?? []).filter((item) => item !== "").length;
+  const failures = checkAnswer(answer, expects);
+  const passed = total - failures.length;
+  return { passed, total, score: total === 0 ? 1 : passed / total, failures };
+}
+
+export async function loadSkillTasks(skillDir) {
+  const document = JSON.parse(await readFile(path.join(skillDir, "evals", "tasks.json"), "utf8"));
+  return Array.isArray(document?.tasks) ? document.tasks : [];
+}
+
+/**
+ * Finds must_include entries that the skill never teaches. `taughtText` is the
+ * SKILL.md, rule, and reference text. The match ignores case.
+ */
+export function untaughtTerms(tasks, taughtText) {
+  const haystack = taughtText.toLowerCase();
+  const missing = [];
+  for (const task of tasks) {
+    for (const needle of task?.expects?.must_include ?? []) {
+      if (typeof needle === "string" && !haystack.includes(needle.toLowerCase())) {
+        missing.push({ task: task.id, term: needle });
+      }
+    }
+  }
+  return missing;
+}
+
+export async function validateSkillEvals(skill, options = {}) {
   const errors = [];
   const tasksPath = path.join(skill.dir, "evals", "tasks.json");
   let document;
@@ -81,6 +111,22 @@ export async function validateSkillEvals(skill) {
       for (const problem of checkAnswer(example, expects)) {
         errors.push(`${skill.name} example ${task.id}: ${problem}`);
       }
+    }
+  }
+  if (typeof options.taughtText === "string") {
+    for (const { task, term } of untaughtTerms(document.tasks, options.taughtText)) {
+      errors.push(`${skill.name} evals task ${task} expects "${term}", which the skill, rule, and references never mention`);
+    }
+  }
+  let exampleFiles = [];
+  try {
+    exampleFiles = await readdir(path.join(skill.dir, "evals", "examples"));
+  } catch {
+    exampleFiles = [];
+  }
+  for (const file of exampleFiles) {
+    if (!file.endsWith(".md") || !ids.has(file.slice(0, -3))) {
+      errors.push(`${skill.name}: evals/examples/${file} does not match a task id`);
     }
   }
   if (negativeChecks === 0) {

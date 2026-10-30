@@ -66,13 +66,13 @@ test("the docs site source is generated from the skills", async () => {
   const out = path.join(tmp, "site-src");
   try {
     const result = await buildSite(root, out);
-    assert.equal(result.skills, 20);
-    assert.equal(result.categories, 4);
+    assert.equal(result.skills, 29);
+    assert.equal(result.categories, 5);
     const index = await readFile(path.join(out, "index.md"), "utf8");
     const shopify = await readFile(path.join(out, "skills", "platforms", "shopify-app-development.md"), "utf8");
     const config = await readFile(path.join(tmp, "mkdocs.yml"), "utf8");
     assert.match(index, /Naser Sadrmanesh/);
-    assert.match(index, /20 skills in 4 categories/);
+    assert.match(index, /29 skills in 5 categories/);
     assert.doesNotMatch(index, /<!-- categories -->/);
     assert.match(shopify, /X-Shopify-Hmac-Sha256/);
     assert.match(shopify, /\{ #reference-auth-and-webhooks-md \}/);

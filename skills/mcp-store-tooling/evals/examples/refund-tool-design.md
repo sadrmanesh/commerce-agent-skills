@@ -1,0 +1,3 @@
+Name it `create_refund` with an `inputSchema` that requires `orderId` (integer) and `amount` (decimal string), and accepts `reason`, `dryRun` (default true), and `confirm` (default false). Annotations: `readOnlyHint: false`, `destructiveHint: true`, `idempotentHint: false`.
+
+With `dryRun`, return what would be refunded and what would remain, and change nothing. Without `confirm: true`, refuse. Before applying, read the order's existing refunds so a retry does not refund twice, and send an idempotency key. If the amount is more than what remains, return a result with `isError: true` and a message such as "Only 38.00 can still be refunded". Block the tool in read-only mode and without the orders write scope.

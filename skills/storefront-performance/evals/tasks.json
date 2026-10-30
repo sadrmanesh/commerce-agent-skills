@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    {
+      "id": "slow-product-lcp",
+      "task": "Mobile field data shows a p75 LCP of 4.6 seconds on product pages. The main image is lazy-loaded and a review widget loads at the top. What do you do?",
+      "expects": {
+        "must_include": ["75th percentile", "LCP", "fetchpriority", "2500"],
+        "must_not_include": ["loading=\"lazy\" on the main"]
+      }
+    },
+    {
+      "id": "cache-without-leaking-carts",
+      "task": "Add full-page caching to a WooCommerce store without showing one shopper's cart to another.",
+      "expects": {
+        "must_include": ["cart", "checkout", "cookie", "bypass"],
+        "must_not_include": ["cache every page for everyone"]
+      }
+    }
+  ]
+}

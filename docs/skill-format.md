@@ -24,7 +24,7 @@ description: "What the skill does. Use when the task looks like this."
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 ```
 
@@ -38,11 +38,20 @@ Required by this repository:
 - The description includes the words `Use when`.
 - `license` is `MIT`.
 - `metadata.author` is `Naser Sadrmanesh`.
-- `metadata.version` is a quoted string, currently `"0.2.0"`.
+- The description is 100 to 320 characters.
+- `metadata.version` is a quoted string equal to the `version` in `package.json`, currently `"0.3.0"`.
+- `SKILL.md` has `## Gotchas`, `## Verification`, and `## Evaluation` sections.
+- The first heading of `rules/<name>.md` matches the first heading of `SKILL.md`.
+- Every `must_include` string in `evals/tasks.json` appears, ignoring case, in `SKILL.md`, the rule, or a reference file. A fixture must not test something the skill never teaches.
+- Every file in `evals/examples/` matches a task id.
+- Links in reference files point to files that exist.
+- The skill is listed once in `website/categories.json`.
 - `evals/tasks.json` has at least two tasks, and each task has a worked example that passes its checks.
 - `SKILL.md` is at most 500 lines.
 - Every file under `references/`, `scripts/`, and `assets/` is mentioned from `SKILL.md`.
 - A skill that ships `scripts/` sets `compatibility` and the scripts run on Node.js 20 or newer with no extra packages.
+
+Markdown in skills, rules, `docs/`, and `website/` does not use em dashes. Pages in `docs/` and `website/` do not use the zero-width non-joiner, including the Persian page. Skill reference text about Persian input may show it, since normalizing it is the subject.
 
 `metadata` values are strings. Quote version numbers so a YAML parser does not turn them into numbers.
 

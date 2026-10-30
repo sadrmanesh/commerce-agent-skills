@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "id": "tiered-wholesale",
+      "task": "Wholesale buyers pay 9.00 per mug, or 8.50 each from 10 mugs. Guests pay 11.00. Describe where the price is computed and what a wholesale buyer sees for 9 and for 10 mugs.",
+      "expects": {
+        "must_include": ["server", "price list", "minQuantity", "9.00", "8.50"],
+        "must_not_include": ["compute the price in JavaScript in the browser"]
+      }
+    },
+    {
+      "id": "net-terms",
+      "task": "A company account wants to pay by invoice on Net 30 terms. What checks run before the order is accepted?",
+      "expects": {
+        "must_include": ["credit limit", "open invoices", "due date"]
+      }
+    }
+  ]
+}

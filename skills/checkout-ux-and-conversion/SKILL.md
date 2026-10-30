@@ -4,7 +4,7 @@ description: "Design checkout so the full cost is visible before payment, guest 
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Checkout UX and conversion

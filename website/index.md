@@ -6,7 +6,7 @@ hide:
 
 # commerce-agent-skills
 
-**Agent Skills and always-on rules that help AI coding agents build e-commerce and marketplace products correctly: WooCommerce, Shopify, payments, search, feeds, and RTL storefronts.**
+**Agent Skills and always-on rules that help AI coding agents build e-commerce and marketplace products correctly: WooCommerce, Shopify, Stripe and Iranian gateways, inventory, returns, B2B pricing, search, feeds, accessibility, performance, MCP store tools, and RTL storefronts.**
 
 <!-- skill-count --> skills in <!-- category-count --> categories, each with a matching rule, reference notes, evaluation fixtures, and small Node.js checks where a check beats another paragraph. Every skill follows the open [Agent Skills](https://agentskills.io/specification) format, so any agent that supports that format can load it.
 
@@ -15,10 +15,8 @@ hide:
 [GitHub](https://github.com/sadrmanesh/commerce-agent-skills){ .md-button }
 
 ```bash
-git clone https://github.com/sadrmanesh/commerce-agent-skills.git
-cd commerce-agent-skills
-node bin/commerce-agent-skills.mjs list
-node bin/commerce-agent-skills.mjs add woocommerce-plugin-development --dir ./agent-skills --with-rule
+npx @sadrmanesh/commerce-agent-skills init
+npx @sadrmanesh/commerce-agent-skills add woocommerce-plugin-development stripe-payments
 ```
 
 ## Why
@@ -27,8 +25,8 @@ Commerce code fails in expensive ways: a webhook processed twice, a price in str
 
 - **Procedures, not essays.** Each skill is a short, ordered procedure with the exact API names, headers, and states that matter.
 - **Constraints that stay in context.** Every skill has a plain Markdown rule for agents that keep short guidance loaded on every task.
-- **Checks you can run.** Evaluation fixtures state what a correct answer must and must not contain, and the validator runs them in CI.
-- **Tool-agnostic.** Plain folders and Markdown. No vendor lock-in and no install step beyond copying a folder.
+- **Checks you can run.** Evaluation fixtures state what a correct answer must and must not contain. The validator runs them in CI, and the eval runner scores your own agent's answers against them.
+- **Tool-agnostic.** Plain folders and Markdown. No vendor lock-in. One `npx` command copies the folders, or copy them by hand.
 
 ## Skill catalog
 
@@ -58,7 +56,7 @@ Commerce code fails in expensive ways: a webhook processed twice, a price in str
 
     ---
 
-    Tasks with `must_include` and `must_not_include` checks, plus a worked example.
+    Tasks with `must_include` and `must_not_include` checks, a worked example, and a runner that scores answers.
 
     [Evaluation fixtures](guides/evaluations.md)
 

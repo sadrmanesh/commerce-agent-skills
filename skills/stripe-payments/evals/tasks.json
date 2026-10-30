@@ -1,0 +1,27 @@
+{
+  "tasks": [
+    {
+      "id": "mark-paid-from-webhook",
+      "task": "A store creates a Stripe PaymentIntent at checkout. Explain how and when the order should become paid, including how to handle a duplicate delivery.",
+      "expects": {
+        "must_include": ["payment_intent.succeeded", "Stripe-Signature", "event.id", "amount_received"],
+        "must_not_include": ["return_url marks the order paid"]
+      }
+    },
+    {
+      "id": "partial-refund",
+      "task": "Refund 5.00 USD of a 19.99 USD Stripe payment from the shop admin and keep the shop record in sync when the refund settles.",
+      "expects": {
+        "must_include": ["POST /v1/refunds", "500", "Idempotency-Key", "refund.updated"],
+        "must_not_include": ["amount=5.00"]
+      }
+    },
+    {
+      "id": "checkout-session-delayed",
+      "task": "A Stripe Checkout Session completes with a bank debit that settles days later. Say what the webhook handler does now and later.",
+      "expects": {
+        "must_include": ["checkout.session.completed", "payment_status", "checkout.session.async_payment_succeeded"]
+      }
+    }
+  ]
+}

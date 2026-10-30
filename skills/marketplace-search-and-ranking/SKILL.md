@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The search-text normalizer requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Marketplace search and ranking

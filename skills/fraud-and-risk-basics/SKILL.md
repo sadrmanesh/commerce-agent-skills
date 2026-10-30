@@ -4,7 +4,7 @@ description: "Hold or review risky payments using provider signals, velocity, an
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Fraud and risk basics
@@ -60,3 +60,7 @@ Do not put the full card number into the velocity key.
 - A 3-D Secure challenge does not capture before the provider reports success.
 - The database and logs for a test payment contain no PAN and no CVV.
 - Two clicks in the review queue do not capture twice.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

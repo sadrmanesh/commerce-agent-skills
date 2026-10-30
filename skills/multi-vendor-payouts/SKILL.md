@@ -4,7 +4,7 @@ description: "Split a marketplace order by vendor, record commission as ledger e
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Multi-vendor payouts
@@ -65,3 +65,7 @@ Amounts are signed. A sale credit to the vendor is positive. Commission the plat
 - An unpaid order produces no payable entries.
 - Running the payout job twice creates one provider payout per vendor.
 - A refund after payout reduces the next batch and leaves the original entries in place.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).
