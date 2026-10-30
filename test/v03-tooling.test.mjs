@@ -12,6 +12,7 @@ import { validateCategories, validateRepository } from "../scripts/validate-skil
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const runner = path.join(root, "scripts", "run-evals.mjs");
+const packageVersion = JSON.parse(await readFile(path.join(root, "package.json"), "utf8")).version;
 
 async function copyRepo() {
   const dir = await mkdtemp(path.join(tmpdir(), "commerce-skills-v03-"));
@@ -32,7 +33,7 @@ function record(overrides = {}) {
       name: "sample",
       description: `Teach the sample skill with enough words to pass the description length check. Use when testing the validator rules in this repository.`,
       license: "MIT",
-      metadata: { author: "Naser Sadrmanesh", version: "0.3.0" },
+      metadata: { author: "Naser Sadrmanesh", version: packageVersion },
     },
     ...overrides,
   };
@@ -46,12 +47,12 @@ test("package version and skill versions agree", async () => {
 
 test("the stricter skill checks catch missing sections, long descriptions, and em dashes", () => {
   const noSections = record({ body: record().body.replace("## Evaluation", "## Notes") });
-  assert.match(validateSkillRecord(noSections, "0.3.0").join(), /needs a "## Evaluation" section/);
+  assert.match(validateSkillRecord(noSections, packageVersion).join(), /needs a "## Evaluation" section/);
   const long = record();
   long.data = { ...long.data, description: `${"x".repeat(320)} Use when` };
-  assert.match(validateSkillRecord(long, "0.3.0").join(), /keep it between 100 and 320/);
+  assert.match(validateSkillRecord(long, packageVersion).join(), /keep it between 100 and 320/);
   const dash = record({ text: "A \u2014 B" });
-  assert.match(validateSkillRecord(dash, "0.3.0").join(), /em dash/);
+  assert.match(validateSkillRecord(dash, packageVersion).join(), /em dash/);
   assert.equal(firstHeading("intro\n# Title here\n## Sub"), "Title here");
   assert.deepEqual(sectionTitles("# A\n## B\ntext\n## C\n"), ["B", "C"]);
 });

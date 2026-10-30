@@ -16,6 +16,21 @@ npx @sadrmanesh/commerce-agent-skills add woocommerce-rest-api stripe-payments
 
 From a checkout of this repository, `node bin/commerce-agent-skills.mjs` takes the same arguments.
 
+## Install from GitHub Packages
+
+npmjs.com is the main registry. Each release is also published to GitHub Packages under the same name. To use it, point the `@sadrmanesh` scope at GitHub Packages in an `.npmrc` file. GitHub Packages asks for a token even for public packages: a personal access token (classic) with the `read:packages` scope.
+
+```ini
+@sadrmanesh:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+```bash
+npx @sadrmanesh/commerce-agent-skills init
+```
+
+Keep the token in the `GITHUB_TOKEN` environment variable, not in the file. Remove the scope line to go back to npmjs.com.
+
 ## Install one skill
 
 1. Copy the skill directory, for example `skills/woocommerce-plugin-development/`.

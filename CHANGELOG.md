@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.1] - 2026-10-30
+
+### Added
+
+- The release workflow publishes `@sadrmanesh/commerce-agent-skills` to GitHub Packages after npm, using the workflow's `GITHUB_TOKEN`. npmjs.com remains the main registry.
+- Install docs for GitHub Packages, with the `.npmrc` scope entry, in the installation guide and the README.
+
+### Changed
+
+- The package and every skill are now version 0.3.1.
+
 ## [0.3.0] - 2026-10-30
 
 ### Added

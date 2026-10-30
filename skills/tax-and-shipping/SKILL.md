@@ -4,7 +4,7 @@ description: "Calculate tax and shipping from the destination and the store's co
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.0"
+  version: "0.3.1"
 ---
 
 # Tax and shipping

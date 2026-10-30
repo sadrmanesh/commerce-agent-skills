@@ -4,7 +4,7 @@ description: "Integrate a payment provider with idempotent charges, signature-ch
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.0"
+  version: "0.3.1"
 ---
 
 # Payment gateway integration

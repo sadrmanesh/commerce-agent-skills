@@ -4,7 +4,7 @@ description: "Build product, cart, and checkout pages that meet WCAG 2.2 AA: key
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.0"
+  version: "0.3.1"
 ---
 
 # Storefront accessibility

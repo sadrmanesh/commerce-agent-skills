@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The price resolver needs Node.js 20 or newer and no packages."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.0"
+  version: "0.3.1"
 ---
 
 # B2B pricing
