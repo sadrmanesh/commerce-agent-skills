@@ -61,17 +61,25 @@ test("substring checks accept the worked example and reject a forbidden API", ()
   assert.ok(checkAnswer("Call update_post_meta on the order.", expects).length > 0);
 });
 
-test("the docs site renders skills and docs", async () => {
-  const out = await mkdtemp(path.join(tmpdir(), "commerce-docs-"));
+test("the docs site source is generated from the skills", async () => {
+  const tmp = await mkdtemp(path.join(tmpdir(), "commerce-docs-"));
+  const out = path.join(tmp, "site-src");
   try {
     const result = await buildSite(root, out);
     assert.equal(result.skills, 20);
-    const index = await readFile(path.join(out, "index.html"), "utf8");
-    const shopify = await readFile(path.join(out, "skills", "shopify-app-development.html"), "utf8");
+    assert.equal(result.categories, 4);
+    const index = await readFile(path.join(out, "index.md"), "utf8");
+    const shopify = await readFile(path.join(out, "skills", "platforms", "shopify-app-development.md"), "utf8");
+    const config = await readFile(path.join(tmp, "mkdocs.yml"), "utf8");
     assert.match(index, /Naser Sadrmanesh/);
+    assert.match(index, /20 skills in 4 categories/);
+    assert.doesNotMatch(index, /<!-- categories -->/);
     assert.match(shopify, /X-Shopify-Hmac-Sha256/);
-    assert.match(shopify, /reference-auth-and-webhooks-md/);
+    assert.match(shopify, /\{ #reference-auth-and-webhooks-md \}/);
+    assert.match(shopify, /\(#reference-auth-and-webhooks-md\)/);
+    assert.match(config, /^INHERIT: /m);
+    assert.match(config, /^docs_dir: site-src$/m);
   } finally {
-    await rm(out, { recursive: true, force: true });
+    await rm(tmp, { recursive: true, force: true });
   }
 });

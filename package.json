@@ -24,9 +24,9 @@
     "validate": "node scripts/validate-skills.mjs",
     "catalog": "node scripts/generate-catalog.mjs",
     "catalog:check": "node scripts/generate-catalog.mjs --check",
-    "docs": "node scripts/build-docs.mjs --out site",
+    "docs": "node scripts/build-docs.mjs && mkdocs build --strict -f build/mkdocs.yml",
     "test": "node --test",
-    "prepublishOnly": "node scripts/validate-skills.mjs && node scripts/generate-catalog.mjs --check && node --test && node scripts/build-docs.mjs --out site"
+    "prepublishOnly": "node scripts/validate-skills.mjs && node scripts/generate-catalog.mjs --check && node --test"
   },
   "repository": {
     "type": "git",

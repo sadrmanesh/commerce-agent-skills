@@ -33,8 +33,23 @@ jobs:
         with:
           node-version: 22
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
+
+      - name: Install MkDocs
+        run: pip install -r requirements-docs.txt
+
+      - name: Generate the site source
+        run: node scripts/build-docs.mjs
+
       - name: Build the static site
-        run: node scripts/build-docs.mjs --out site
+        env:
+          NO_MKDOCS_2_WARNING: "1"
+        run: mkdocs build --strict -f build/mkdocs.yml
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

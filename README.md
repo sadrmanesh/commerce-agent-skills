@@ -54,7 +54,7 @@ cd commerce-agent-skills
 node scripts/validate-skills.mjs
 ```
 
-Node.js 20 or newer is required for the validator, the docs build, and the command. This repository is a skill library, not a dependency of the storefront.
+Node.js 20 or newer is required for the validator, the docs generator, and the command. The docs site also needs Python and MkDocs. This repository is a skill library, not a dependency of the storefront.
 
 Copy one skill into a directory your agent already scans:
 
@@ -82,7 +82,7 @@ The skill format is documented in [docs/skill-format.md](docs/skill-format.md). 
 
 ## Docs site
 
-`node scripts/build-docs.mjs --out site` writes a static site. `.github/workflows/pages.yml` deploys it to GitHub Pages on pushes to `main` after the repository Pages source is set to GitHub Actions. The project address is `https://sadrmanesh.github.io/commerce-agent-skills/`. See [docs/github-pages.md](docs/github-pages.md).
+The documentation lives at [sadrmanesh.github.io/commerce-agent-skills](https://sadrmanesh.github.io/commerce-agent-skills/). It is built with MkDocs Material, and the skill, rule, and guide pages are generated from this repository by `scripts/build-docs.mjs`, so they always match the files here. `.github/workflows/pages.yml` deploys it on pushes to `main`. See [docs/github-pages.md](docs/github-pages.md).
 
 `.github/workflows/release.yml` tags `vX.Y.Z` and opens a GitHub release when you run it with the version in `package.json`. It does not publish to npm.
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- The docs site is now built with MkDocs Material. Skill, rule, and guide pages are generated from the repository, with a catalog page per category, search, a dark theme, and a Persian overview.
+
 ## 0.2.0 - 2026-10-30
 
 ### Added
