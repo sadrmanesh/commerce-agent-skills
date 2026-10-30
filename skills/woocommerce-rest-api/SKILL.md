@@ -4,7 +4,7 @@ description: "Call the WooCommerce REST API at wc/v3, including authentication, 
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # WooCommerce REST API
@@ -84,3 +84,7 @@ Topic names look like `order.updated` and `product.created`. The delivered resou
 - Listing orders walks every `X-WP-TotalPages` page without duplicating or skipping ids.
 - Repeating the same create with the same idempotency key returns one order.
 - A webhook ping does not create an order. A signed `order.updated` delivery updates the matching local record.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

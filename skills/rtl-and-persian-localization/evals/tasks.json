@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "document-direction",
+      "task": "Render the Persian storefront in the fa_IR locale with right-to-left document direction and logical CSS.",
+      "expects": {
+        "must_include": [
+          "fa_IR",
+          "dir=\"rtl\""
+        ],
+        "must_not_include": [
+          "margin-left"
+        ]
+      }
+    },
+    {
+      "id": "rial-display",
+      "task": "Show an Iranian rial price through WooCommerce formatting without converting to toman only in the theme.",
+      "expects": {
+        "must_include": [
+          "IRR",
+          "wc_price"
+        ],
+        "must_not_include": [
+          "/ 10"
+        ]
+      }
+    }
+  ]
+}

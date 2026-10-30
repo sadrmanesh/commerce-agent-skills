@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "one-renewal",
+      "task": "Create a single renewal charge for a subscription period and retry it without opening a second period.",
+      "expects": {
+        "must_include": [
+          "idempotency",
+          "current_period_end"
+        ],
+        "must_not_include": [
+          "wp_insert_post"
+        ]
+      }
+    },
+    {
+      "id": "cancel-at-period-end",
+      "task": "Let a shopper cancel at period end without removing access before the period they already paid for.",
+      "expects": {
+        "must_include": [
+          "cancel_at_period_end",
+          "active"
+        ],
+        "must_not_include": [
+          "status = canceled immediately"
+        ]
+      }
+    }
+  ]
+}

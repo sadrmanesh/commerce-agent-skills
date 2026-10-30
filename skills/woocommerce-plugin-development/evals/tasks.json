@@ -1,0 +1,32 @@
+{
+  "tasks": [
+    {
+      "id": "save-order-meta",
+      "task": "Store a carrier code from the WooCommerce order admin screen using CRUD so the value survives HPOS.",
+      "expects": {
+        "must_include": [
+          "wc_get_order",
+          "update_meta_data",
+          "->save("
+        ],
+        "must_not_include": [
+          "update_post_meta"
+        ]
+      }
+    },
+    {
+      "id": "declare-hpos",
+      "task": "Declare High-Performance Order Storage compatibility from the main plugin file after order access uses CRUD.",
+      "expects": {
+        "must_include": [
+          "before_woocommerce_init",
+          "declare_compatibility",
+          "custom_order_tables"
+        ],
+        "must_not_include": [
+          "save_post_shop_order"
+        ]
+      }
+    }
+  ]
+}

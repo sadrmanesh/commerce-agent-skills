@@ -4,7 +4,7 @@ description: "Design checkout so the full cost is visible before payment, guest 
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Checkout UX and conversion
@@ -80,3 +80,7 @@ This skill does not claim a conversion rate. It states conditions the checkout h
 - A declined payment preserves the cart and the address.
 - Submitting twice creates one order and charges once.
 - Keyboard-only use reaches every field, the error, and the pay control. In a narrow viewport the total is still visible with the pay control.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

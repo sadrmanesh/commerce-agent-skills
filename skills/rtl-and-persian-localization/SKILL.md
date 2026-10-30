@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The Persian normalizer requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # RTL and Persian localization
@@ -75,3 +75,7 @@ node scripts/normalize-persian.mjs --search "كالاي ۱۲"
 - Search normalization makes `كالا` and `کالا` match. The stored title is unchanged.
 - An order date stored by WooCommerce remains Gregorian. Any Jalali label is display-only.
 - A test payment uses the same major units the shopper saw. Toman and rial are not mixed inside one order.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

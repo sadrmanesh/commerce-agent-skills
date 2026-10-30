@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "stable-variant-id",
+      "task": "Export the blue shirt variant to Merchant Center with a stable id, a grouped parent, and a decimal price.",
+      "expects": {
+        "must_include": [
+          "item_group_id",
+          "19.00 USD"
+        ],
+        "must_not_include": [
+          "$19.00"
+        ]
+      }
+    },
+    {
+      "id": "generated-title",
+      "task": "Label a generated product title so Merchant Center can tell it from a title a person wrote.",
+      "expects": {
+        "must_include": [
+          "trained_algorithmic_media",
+          "structured_title"
+        ],
+        "must_not_include": [
+          "free shipping"
+        ]
+      }
+    }
+  ]
+}

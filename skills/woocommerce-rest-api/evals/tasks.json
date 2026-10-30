@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "https-basic-auth",
+      "task": "Authenticate a server-side WooCommerce REST client over HTTPS without putting the secret in the browser.",
+      "expects": {
+        "must_include": [
+          "/wp-json/wc/v3/",
+          "Basic"
+        ],
+        "must_not_include": [
+          "wc-api/v3"
+        ]
+      }
+    },
+    {
+      "id": "idempotent-order-create",
+      "task": "Create an order through the REST API so a retried POST does not create a second order.",
+      "expects": {
+        "must_include": [
+          "meta_data",
+          "_idempotency_key"
+        ],
+        "must_not_include": [
+          "consumer_secret="
+        ]
+      }
+    }
+  ]
+}

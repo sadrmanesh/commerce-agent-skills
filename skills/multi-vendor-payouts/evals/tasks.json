@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "split-paid-order",
+      "task": "Record vendor goods and platform commission for a paid marketplace order without editing the line price.",
+      "expects": {
+        "must_include": [
+          "ledger",
+          "commission"
+        ],
+        "must_not_include": [
+          "edit the line price"
+        ]
+      }
+    },
+    {
+      "id": "retry-payout",
+      "task": "Run a vendor payout batch twice without sending the money twice.",
+      "expects": {
+        "must_include": [
+          "payout_id",
+          "idempotency"
+        ],
+        "must_not_include": [
+          "sum the order totals again"
+        ]
+      }
+    }
+  ]
+}

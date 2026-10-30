@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0 - 2026-10-30
+
+### Added
+
+- Skills for multi-vendor payouts, Shopify apps, a Next.js storefront, Google Merchant product feeds, tax and shipping, subscription billing, fraud and risk review, vector product search, product-description guardrails, and conversion events.
+- Evaluation tasks and a worked example for every skill.
+- A zero-dependency `commerce-agent-skills` command with `list` and `add`. The package is not published to the npm registry.
+- A static docs build, a GitHub Pages workflow, and a manual release workflow that tags a version.
+
 ## 0.1.0 - 2026-10-30
 
 ### Added

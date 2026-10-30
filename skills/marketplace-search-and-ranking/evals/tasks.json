@@ -1,0 +1,29 @@
+{
+  "tasks": [
+    {
+      "id": "index-variant",
+      "task": "Index a variable product so each color with its own price and stock is a separate search document.",
+      "expects": {
+        "must_include": [
+          "unit_id",
+          "sku"
+        ],
+        "must_not_include": [
+          "one document for the parent only"
+        ]
+      }
+    },
+    {
+      "id": "normalize-query",
+      "task": "Normalize a Persian shopper query and the catalog title the same way before lexical matching.",
+      "expects": {
+        "must_include": [
+          "normalizeSearchText"
+        ],
+        "must_not_include": [
+          "English stemmer on Persian"
+        ]
+      }
+    }
+  ]
+}

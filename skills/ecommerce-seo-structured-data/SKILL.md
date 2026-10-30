@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The JSON-LD checker requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Ecommerce SEO structured data
@@ -78,3 +78,7 @@ A snippet may describe a price range. A merchant listing, in the documentation t
 - The price, currency, and availability match the variant on the page, including an out-of-stock variant.
 - A Persian product page keeps Persian text in `name` and ASCII in `price` and `priceCurrency`.
 - Disabling JavaScript still leaves the JSON-LD in the document.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

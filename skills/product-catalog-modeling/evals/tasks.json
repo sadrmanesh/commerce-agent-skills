@@ -1,0 +1,29 @@
+{
+  "tasks": [
+    {
+      "id": "create-variation",
+      "task": "Create a WooCommerce variation with its own SKU and price under a variable parent that has no SKU.",
+      "expects": {
+        "must_include": [
+          "WC_Product_Variation",
+          "set_sku"
+        ],
+        "must_not_include": [
+          "update_post_meta"
+        ]
+      }
+    },
+    {
+      "id": "sync-parent",
+      "task": "After writing variations, refresh the parent price range and stock status from the children.",
+      "expects": {
+        "must_include": [
+          "WC_Product_Variable::sync"
+        ],
+        "must_not_include": [
+          "set_sku( 'PARENT' )"
+        ]
+      }
+    }
+  ]
+}

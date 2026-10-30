@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "sku-before-vector",
+      "task": "Return the product whose SKU matches the query before any nearest-vector result.",
+      "expects": {
+        "must_include": [
+          "sku",
+          "vector"
+        ],
+        "must_not_include": [
+          "embedding of the price"
+        ]
+      }
+    },
+    {
+      "id": "reembed-on-title",
+      "task": "Re-embed a variant when its title changes and skip re-embedding when only the price changes.",
+      "expects": {
+        "must_include": [
+          "text_hash",
+          "model_id"
+        ],
+        "must_not_include": [
+          "cosine and dot product"
+        ]
+      }
+    }
+  ]
+}

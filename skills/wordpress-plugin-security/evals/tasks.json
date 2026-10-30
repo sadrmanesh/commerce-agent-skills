@@ -1,0 +1,31 @@
+{
+  "tasks": [
+    {
+      "id": "private-rest-route",
+      "task": "Register a REST route that updates an order note and rejects shoppers who cannot edit orders.",
+      "expects": {
+        "must_include": [
+          "permission_callback",
+          "current_user_can",
+          "edit_shop_orders"
+        ],
+        "must_not_include": [
+          "__return_true"
+        ]
+      }
+    },
+    {
+      "id": "admin-form-nonce",
+      "task": "Save an admin form that changes an order only when the user has the capability and a valid nonce.",
+      "expects": {
+        "must_include": [
+          "check_admin_referer",
+          "current_user_can"
+        ],
+        "must_not_include": [
+          "unserialize("
+        ]
+      }
+    }
+  ]
+}

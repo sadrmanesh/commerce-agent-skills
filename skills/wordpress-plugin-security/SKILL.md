@@ -4,7 +4,7 @@ description: "Review and implement WordPress plugin security: capabilities, nonc
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # WordPress plugin security
@@ -115,3 +115,7 @@ Pass every variable through `prepare()`. Do not concatenate table names from req
 - Repeat the write with the nonce removed. It does not change data.
 - A REST callback with the permission callback removed is a failed review, even if the happy path works.
 - An error response does not include a secret, a stack trace, or another customer's data.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

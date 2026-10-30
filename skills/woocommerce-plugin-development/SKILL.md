@@ -4,7 +4,7 @@ description: "Build and change WooCommerce plugins with hooks, CRUD data stores,
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # WooCommerce plugin development
@@ -78,3 +78,7 @@ A plugin that hooks only the classic actions does not run during block checkout.
 - If both checkouts are enabled, place one classic order and one block order.
 - A user without the required capability cannot perform the write. A missing or reused nonce is rejected.
 - New strings are escaped where printed and are picked up by `wp i18n make-pot`.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

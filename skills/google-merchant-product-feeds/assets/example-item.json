@@ -1,0 +1,11 @@
+{
+  "id": "SHIRT-BLUE",
+  "title": "Cotton shirt, blue",
+  "description": "Short-sleeve cotton shirt in blue.",
+  "link": "https://shop.example/shirt?color=blue",
+  "image_link": "https://shop.example/shirt-blue.jpg",
+  "availability": "in_stock",
+  "price": "19.00 USD",
+  "item_group_id": "shirt",
+  "color": "blue"
+}

@@ -22,12 +22,13 @@ node --test
 
 1. Create `skills/<name>/SKILL.md`. The directory name and the `name` field match. Use lowercase letters, digits, and single hyphens.
 2. Write a description of at most 1024 characters that says what the skill does and includes `Use when`.
-3. Set `license` to `MIT` and metadata `author` to `Naser Sadrmanesh`. Quote `version`.
+3. Set `license` to `MIT` and metadata `author` to `Naser Sadrmanesh`. Quote `version` as `"0.2.0"` until the next release.
 4. Keep `SKILL.md` at or under 500 lines. Put long notes in `references/` and mention each file from `SKILL.md`.
 5. If you add a script, use Node.js built-in modules only, set `compatibility`, and cover the script with a test in `test/`.
 6. Add `rules/<name>.md`: plain Markdown, one heading, 8 to 80 lines.
-7. Add the skill name to `skills/catalog-order.txt`.
-8. Regenerate the catalog:
+7. Add `evals/tasks.json` with at least two tasks and a worked example at `evals/examples/<id>.md` for each task. One task must include `must_not_include`.
+8. Add the skill name to `skills/catalog-order.txt`.
+9. Regenerate the catalog:
 
 ```bash
 node scripts/generate-catalog.mjs

@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The signature checker requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Order and webhook reliability
@@ -93,3 +93,7 @@ There is no separate backoff retry of one payload described here. Timeouts and r
 - An older event received after a newer one does not downgrade a paid order.
 - A wrong amount does not mark the order paid.
 - Stopping the database makes the handler return a retryable status and, after recovery, the redelivered event still applies once.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

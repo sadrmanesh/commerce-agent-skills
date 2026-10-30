@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "confirmed-capture",
+      "task": "Mark a WooCommerce order paid only after the provider confirms the capture, and store the transaction id.",
+      "expects": {
+        "must_include": [
+          "payment_complete",
+          "$transaction_id"
+        ],
+        "must_not_include": [
+          "add_post_meta"
+        ]
+      }
+    },
+    {
+      "id": "replayed-webhook",
+      "task": "Apply a signed payment webhook once when the provider retries the same captured payment.",
+      "expects": {
+        "must_include": [
+          "idempotency",
+          "raw body"
+        ],
+        "must_not_include": [
+          "status=success"
+        ]
+      }
+    }
+  ]
+}

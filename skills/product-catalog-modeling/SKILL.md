@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The catalog checker requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Product catalog modeling
@@ -85,3 +85,7 @@ Rules the checker enforces:
 - Every SKU resolves to one purchasable unit.
 - A variant combination that is not for sale is absent, not stored with a blank price.
 - After import, the storefront price and stock for one variant match that variant's record, not the parent.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).
