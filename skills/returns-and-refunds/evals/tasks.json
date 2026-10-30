@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    {
+      "id": "refund-after-inspection",
+      "task": "A shopper returns two of three mugs. One arrives broken. Explain what is refunded, what is restocked, and when.",
+      "expects": {
+        "must_include": ["inspect", "resellable", "damaged", "restock"],
+        "must_not_include": ["restock both at approval"]
+      }
+    },
+    {
+      "id": "woocommerce-partial-refund",
+      "task": "Refund one line of a WooCommerce order through the payment gateway and keep the order paid for the rest.",
+      "expects": {
+        "must_include": ["orders/{id}/refunds", "api_refund", "partial"],
+        "must_not_include": ["set the order status to refunded"]
+      }
+    }
+  ]
+}

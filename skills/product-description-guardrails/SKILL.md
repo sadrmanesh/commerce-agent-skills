@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The description checker requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Product description guardrails
@@ -78,3 +78,7 @@ It does not detect a made-up material that lacks those phrases. Review the facts
 - The checker fails "clinically proven" when `allowedClaims` is empty.
 - A `fa_IR` request does not return an English-only description.
 - Generated Merchant Center text is labeled `trained_algorithmic_media`.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

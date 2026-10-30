@@ -15,19 +15,20 @@ Install Node.js 20 or newer. There is no dependency install.
 ```bash
 node scripts/validate-skills.mjs
 node scripts/generate-catalog.mjs --check
+node scripts/run-evals.mjs
 node --test
 ```
 
 ## Add or change a skill
 
 1. Create `skills/<name>/SKILL.md`. The directory name and the `name` field match. Use lowercase letters, digits, and single hyphens.
-2. Write a description of at most 1024 characters that says what the skill does and includes `Use when`.
-3. Set `license` to `MIT` and metadata `author` to `Naser Sadrmanesh`. Quote `version` as `"0.2.0"` until the next release.
-4. Keep `SKILL.md` at or under 500 lines. Put long notes in `references/` and mention each file from `SKILL.md`.
+2. Write a description of 100 to 320 characters that says what the skill does and includes `Use when`.
+3. Set `license` to `MIT` and metadata `author` to `Naser Sadrmanesh`. Quote `version` as the `version` in `package.json`, currently `"0.3.0"`.
+4. Keep `SKILL.md` at or under 500 lines, with `## Gotchas`, `## Verification`, and `## Evaluation` sections. Put long notes in `references/` and mention each file from `SKILL.md`.
 5. If you add a script, use Node.js built-in modules only, set `compatibility`, and cover the script with a test in `test/`.
-6. Add `rules/<name>.md`: plain Markdown, one heading, 8 to 80 lines.
-7. Add `evals/tasks.json` with at least two tasks and a worked example at `evals/examples/<id>.md` for each task. One task must include `must_not_include`.
-8. Add the skill name to `skills/catalog-order.txt`.
+6. Add `rules/<name>.md`: plain Markdown, 8 to 80 lines, starting with the same heading as `SKILL.md`.
+7. Add `evals/tasks.json` with at least two tasks and a worked example at `evals/examples/<id>.md` for each task. One task must include `must_not_include`. Every `must_include` string must appear in the skill, its rule, or its references.
+8. Add the skill name to `skills/catalog-order.txt` and to one category in `website/categories.json`.
 9. Regenerate the catalog:
 
 ```bash

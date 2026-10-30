@@ -4,7 +4,7 @@ description: "Model subscription state, renewal charges, proration, and dunning 
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Subscription billing
@@ -70,3 +70,7 @@ Do not overload `active` to mean "card on file but the last charge failed".
 - A failed renewal does not advance `current_period_end`.
 - Cancel at period end leaves access on until that timestamp and does not create another invoice.
 - A plan change records proration as its own invoice lines.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

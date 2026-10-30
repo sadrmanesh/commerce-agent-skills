@@ -6,16 +6,16 @@ Skills and rules for AI coding agents that build e-commerce and marketplace prod
 
 The skills follow the [Agent Skills](https://agentskills.io/specification) format: a folder, a `SKILL.md` file with `name` and `description`, and optional reference files and scripts. An agent that supports that format can load them. The format does not name an install path. [Installation](docs/installation.md) explains how to point your agent at these folders.
 
-Version 0.2.0 is the professional phase of the open library. It keeps the 0.1.0 WooCommerce, payment, catalog, search, checkout, localization, webhook, and structured-data skills, and adds multi-vendor payouts, Shopify apps, a Next.js storefront, Merchant Center feeds, tax and shipping, subscriptions, fraud review, vector search, description guardrails, and conversion events.
+Version 0.3.0 adds store operations to the library. It keeps the twenty skills from 0.1.0 and 0.2.0 and adds Stripe payments, Iranian payment gateways such as Zarinpal, inventory across warehouses, returns and refunds, B2B pricing, catalog import and migration, storefront accessibility, storefront performance, and MCP store tooling. It also adds a stricter validator and an eval runner that scores answers against the fixtures.
 
 ## Features
 
-- Twenty skills an agent can load when a task matches the skill description.
+- Twenty-nine skills an agent can load when a task matches the skill description.
 - A matching plain-Markdown rule for each skill, for agents that keep short rules in context.
-- Evaluation tasks and a worked example for every skill.
+- Evaluation tasks and a worked example for every skill, and `scripts/run-evals.mjs` to score answers against them.
 - Reference notes and small Node.js tools where a check is better than another paragraph.
-- A validator, a generated catalog, and a docs build, all run in CI.
-- A local `commerce-agent-skills` command that lists skills and copies one into a directory.
+- A strict validator, a catalog built from the skill files, and a docs build, all run in CI. The validator checks versions, required sections, rule headings, that every eval term is taught by the skill, category coverage, and prose style.
+- An `npx @sadrmanesh/commerce-agent-skills` installer that copies every skill and rule, or the ones you name, into your project.
 
 ## Skill catalog
 
@@ -42,9 +42,37 @@ Version 0.2.0 is the professional phase of the open library. It keeps the 0.1.0 
 | [`vector-product-search`](skills/vector-product-search/SKILL.md) | Add vector retrieval beside lexical product search, with one embedding per purchasable unit and exact SKU lookup kept first. Use when adding embedding search, hybrid ranking, or re-embedding after catalog edits. |
 | [`product-description-guardrails`](skills/product-description-guardrails/SKILL.md) | Generate product titles and descriptions only from catalog facts, and block prices, certifications, and medical claims that are not in the record. Use when writing or reviewing generated product copy, Merchant Center text, or locale-specific descriptions. |
 | [`conversion-event-tracking`](skills/conversion-event-tracking/SKILL.md) | Send commerce analytics events with stable names, item ids, and a purchase event that fires once from a confirmed order. Use when adding or changing view_item, add_to_cart, begin_checkout, purchase, or refund tracking. |
+| [`stripe-payments`](skills/stripe-payments/SKILL.md) | Take card and wallet payments with Stripe PaymentIntents or Checkout Sessions, idempotency keys, and signed webhooks that move the order to paid. Use when adding Stripe to a store, handling Stripe webhooks, or refunding through the Stripe API. |
+| [`iranian-payment-gateways`](skills/iranian-payment-gateways/SKILL.md) | Integrate Zarinpal and other Shaparak redirect gateways with a server-side verify call, Rial and Toman amounts, and one paid transition per authority. Use when adding an Iranian payment gateway or fixing callback, verify, or amount handling for IRR or IRT stores. |
+| [`inventory-and-multi-warehouse`](skills/inventory-and-multi-warehouse/SKILL.md) | Track stock per location with on-hand, reserved, and available quantities, reserve at checkout, and allocate orders across warehouses without overselling. Use when adding warehouses or stores as stock locations, reservations, transfers, or order routing. |
+| [`returns-and-refunds`](skills/returns-and-refunds/SKILL.md) | Run returns as a tracked RMA from request to inspection, refund only what the policy and payment allow, and restock only inspected items. Use when building a returns portal, refund rules, exchanges, store credit, or restocking after a return. |
+| [`b2b-pricing`](skills/b2b-pricing/SKILL.md) | Price for business buyers with customer-group price lists, quantity tiers, contract prices, minimum quantities, net terms, and tax exemption, resolved on the server. Use when adding wholesale or B2B prices, tiered pricing, quotes, or company accounts to a store. |
+| [`catalog-import-and-migration`](skills/catalog-import-and-migration/SKILL.md) | Import, export, and migrate product catalogs with stable SKU keys, a dry run, parent-before-variation order, batched writes, and URL redirects. Use when moving a store between platforms, bulk importing CSV or JSON products, or exporting a catalog for another system. |
+| [`storefront-accessibility`](skills/storefront-accessibility/SKILL.md) | Build product, cart, and checkout pages that meet WCAG 2.2 AA: keyboard use, visible focus, labels and autocomplete, announced errors and cart updates, contrast, and target size. Use when building or reviewing storefront UI, forms, filters, carousels, or checkout for accessibility. |
+| [`storefront-performance`](skills/storefront-performance/SKILL.md) | Improve storefront Core Web Vitals (LCP, INP, CLS) using field data at the 75th percentile, image and font loading, caching of catalog pages, and lighter third-party scripts. Use when product or category pages feel slow, Web Vitals fail, or a theme, app, or script change needs a performance check. |
+| [`mcp-store-tooling`](skills/mcp-store-tooling/SKILL.md) | Design Model Context Protocol servers for stores: read and write tools with annotations, input and output schemas, scopes, dry runs and confirmation for risky writes, resources, and remote auth. Use when exposing a store's catalog, orders, or customers to an agent through MCP, or reviewing such a server. |
 <!-- catalog:end -->
 
-## Quick start
+## Install
+
+Install the skills into your project with npx. Node.js 20 or newer is required, and nothing is downloaded after the package itself:
+
+```bash
+npx @sadrmanesh/commerce-agent-skills init
+```
+
+That copies every skill to `.agents/skills/` and every rule to `.agents/rules/`. To pick skills, or to write them where your agent looks:
+
+```bash
+npx @sadrmanesh/commerce-agent-skills list
+npx @sadrmanesh/commerce-agent-skills add woocommerce-plugin-development stripe-payments
+npx @sadrmanesh/commerce-agent-skills init --layout root
+npx @sadrmanesh/commerce-agent-skills init --skills-dir path/to/skills --rules-dir path/to/rules
+```
+
+`init` skips skills that are already installed, `--force` replaces them, and `--dry-run` shows what would be written. From a checkout, `node bin/commerce-agent-skills.mjs` takes the same arguments. Details are in [docs/installation.md](docs/installation.md) and [docs/cli.md](docs/cli.md).
+
+## Work on the library
 
 Clone the repository and check the skills:
 
@@ -55,14 +83,6 @@ node scripts/validate-skills.mjs
 ```
 
 Node.js 20 or newer is required for the validator, the docs generator, and the command. The docs site also needs Python and MkDocs. This repository is a skill library, not a dependency of the storefront.
-
-Copy one skill into a directory your agent already scans:
-
-```bash
-node bin/commerce-agent-skills.mjs add woocommerce-plugin-development --dir ./agent-skills
-```
-
-The package is not on the npm registry. After it is published, that command is `npx commerce-agent-skills add woocommerce-plugin-development --dir ./agent-skills`. Details are in [docs/installation.md](docs/installation.md) and [docs/cli.md](docs/cli.md).
 
 ## Usage
 
@@ -78,27 +98,37 @@ node scripts/generate-catalog.mjs --check
 node --test
 ```
 
-The skill format is documented in [docs/skill-format.md](docs/skill-format.md). Evaluation fixtures are documented in [docs/evaluations.md](docs/evaluations.md).
+Score answers against the eval fixtures:
+
+```bash
+node scripts/run-evals.mjs
+node scripts/run-evals.mjs --answers ./answers --min-score 0.8
+```
+
+The first command checks the worked examples. The second reads `answers/<skill>/<task-id>.md`, prints a score per skill, and exits with status 1 below the threshold.
+
+The skill format is documented in [docs/skill-format.md](docs/skill-format.md). Evaluation fixtures and the runner are documented in [docs/evaluations.md](docs/evaluations.md).
 
 ## Docs site
 
 The documentation lives at [sadrmanesh.github.io/commerce-agent-skills](https://sadrmanesh.github.io/commerce-agent-skills/). It is built with MkDocs Material, and the skill, rule, and guide pages are generated from this repository by `scripts/build-docs.mjs`, so they always match the files here. `.github/workflows/pages.yml` deploys it on pushes to `main`. See [docs/github-pages.md](docs/github-pages.md).
 
-`.github/workflows/release.yml` tags `vX.Y.Z` and opens a GitHub release when you run it with the version in `package.json`. It does not publish to npm.
+`.github/workflows/release.yml` runs when a `vX.Y.Z` tag is pushed. It checks that the tag matches `package.json`, runs the validator, evals, and tests, creates the GitHub release if it does not exist, and publishes `@sadrmanesh/commerce-agent-skills` to npm. Running it by hand with a version tags that version first.
 
 ## Roadmap
 
-0.2.0 adds the professional skill set, eval fixtures, the local command, and the docs and release workflows. It does not publish the npm package and it does not ship a running payout service or a live Merchant Center upload.
+0.3.0 adds nine store operations skills, the eval runner, stricter validation, and the `npx @sadrmanesh/commerce-agent-skills` installer. The runner does not send tasks to a live agent: it scores answer files you collect.
 
 Later releases can add:
 
-- A published package on the npm registry, using the `commerce-agent-skills` bin that is already in this repo.
 - Runnable reference services for the payout ledger and a feed upload, with the same checks the local scripts already apply.
 - More store platforms, written to the same level of API detail as the WooCommerce and Shopify skills.
+- More payment providers, written like the Stripe and Zarinpal skills.
+- Graded eval rubrics beyond substring checks.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Run the validator before opening a pull request. New skills need a matching rule and a row in `skills/catalog-order.txt`.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Run the validator before opening a pull request. New skills need a matching rule, a row in `skills/catalog-order.txt`, and a place in `website/categories.json`.
 
 ## License
 

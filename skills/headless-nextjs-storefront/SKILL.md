@@ -4,7 +4,7 @@ description: "Build a Next.js storefront that loads catalog data on the server, 
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Headless Next.js storefront
@@ -63,3 +63,7 @@ Call `revalidateTag('product:<id>')` or `revalidatePath` from the server path th
 - Searching the client bundle finds no consumer secret and no Admin API token.
 - Updating a price and delivering the catalog webhook changes the next product response without a redeploy.
 - Two browsers do not share a cart token.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

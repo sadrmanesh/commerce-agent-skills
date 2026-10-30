@@ -16,14 +16,16 @@
     "id": "payments-and-orders",
     "title": "Payments and orders",
     "icon": "material/credit-card-check-outline",
-    "summary": "Gateways, webhooks, subscriptions, risk, tax, shipping, and vendor payouts.",
+    "summary": "Stripe, Iranian gateways, webhooks, subscriptions, risk, tax, shipping, and vendor payouts.",
     "skills": [
       "payment-gateway-integration",
       "order-and-webhook-reliability",
       "subscription-billing",
       "fraud-and-risk-basics",
       "tax-and-shipping",
-      "multi-vendor-payouts"
+      "multi-vendor-payouts",
+      "stripe-payments",
+      "iranian-payment-gateways"
     ]
   },
   {
@@ -43,12 +45,27 @@
     "id": "conversion-and-growth",
     "title": "Conversion and growth",
     "icon": "material/chart-line",
-    "summary": "Checkout UX, structured data, analytics events, and Persian RTL localization.",
+    "summary": "Checkout UX, accessibility, Core Web Vitals, structured data, analytics events, and Persian RTL localization.",
     "skills": [
       "checkout-ux-and-conversion",
       "ecommerce-seo-structured-data",
       "conversion-event-tracking",
-      "rtl-and-persian-localization"
+      "rtl-and-persian-localization",
+      "storefront-accessibility",
+      "storefront-performance"
+    ]
+  },
+  {
+    "id": "store-operations",
+    "title": "Store operations",
+    "icon": "material/warehouse",
+    "summary": "Inventory across warehouses, returns and refunds, B2B pricing, catalog migrations, and MCP store tools.",
+    "skills": [
+      "inventory-and-multi-warehouse",
+      "returns-and-refunds",
+      "b2b-pricing",
+      "catalog-import-and-migration",
+      "mcp-store-tooling"
     ]
   }
 ]

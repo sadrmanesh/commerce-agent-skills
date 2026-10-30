@@ -4,7 +4,7 @@ description: "Build a Shopify app with the configured Admin API version, session
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Shopify app development
@@ -67,3 +67,7 @@ Google Cloud Pub/Sub and Amazon EventBridge deliveries do not use this HMAC head
 - The same `X-Shopify-Webhook-Id` applied twice creates one record.
 - An embedded request with no valid session token does not run a mutation.
 - An app proxy request cannot change shop settings.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

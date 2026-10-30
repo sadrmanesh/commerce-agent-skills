@@ -24,4 +24,4 @@ The site is served at `https://sadrmanesh.github.io/commerce-agent-skills/`.
 
 ## Releases
 
-`.github/workflows/release.yml` is manual. It checks that the version you enter matches `package.json`, runs the validator and tests, tags `vX.Y.Z`, and creates a GitHub release. It does not publish the npm package.
+`.github/workflows/release.yml` runs when a `vX.Y.Z` tag is pushed, or by hand with a version. It checks that the version matches `package.json`, runs the validator, evals, and tests, tags the version when run by hand, creates the GitHub release if it does not exist, and publishes `@sadrmanesh/commerce-agent-skills` to npm with the `NPM_TOKEN` repository secret.

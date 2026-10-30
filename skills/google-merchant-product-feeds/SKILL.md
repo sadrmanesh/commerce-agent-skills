@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The feed item checker requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Google Merchant product feeds
@@ -64,3 +64,7 @@ Merchant Center has announced a minimum image size of 500 by 500 pixels, with en
 - Each variant id is unique and stable, and shares `item_group_id` with its siblings.
 - A spot-check opens `link` and sees the same price text and availability.
 - A generated description is in `structured_description`, not only in `description`.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

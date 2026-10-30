@@ -1,10 +1,24 @@
 # Changelog
 
-## Unreleased
+## [0.3.0] - 2026-10-30
+
+### Added
+
+- Skills for Stripe payments, Iranian payment gateways (Zarinpal request, callback, and verify, with Rial and Toman amounts), inventory across warehouses, returns and refunds, B2B pricing, catalog import and migration, storefront accessibility (WCAG 2.2 AA), storefront performance (Core Web Vitals), and MCP store tooling. Each has a rule, reference notes, and eval fixtures.
+- Node.js checks for Stripe webhook signatures, gateway verify responses, stock allocation, B2B price resolution, import rows, Web Vitals ratings, and MCP tool definitions.
+- `scripts/run-evals.mjs` and `npm run eval`, which score worked examples or a folder of answers against the fixtures, per task, per skill, and overall, with `--skill`, `--min-score`, and `--json`.
+- A "Store operations" category on the docs site.
+- The library is published on npm as `@sadrmanesh/commerce-agent-skills`. `npx @sadrmanesh/commerce-agent-skills init` copies every skill and rule into a project, `add <skill> [<skill> ...]` copies the named ones, and `list` prints them, with `--json`. Skills go to `.agents/skills/` and rules to `.agents/rules/` by default. `--layout root`, `--skills-dir`, `--rules-dir`, `--target`, `--only`, `--no-rules`, `--force`, `--dry-run`, and `--version` are supported, and no network access is needed.
+- The release workflow runs on `vX.Y.Z` tags, creates the GitHub release with the notes from this file, and publishes the package to npm.
 
 ### Changed
 
-- The docs site is now built with MkDocs Material. Skill, rule, and guide pages are generated from the repository, with a catalog page per category, search, a dark theme, and a Persian overview.
+- `add` copies the matching rule by default. `--no-rules` turns that off, and `--with-rule` is still accepted.
+- The command now works when started through a symlink, as `npx` and global installs do.
+- The npm package ships only the command, skills, rules, and changelog.
+- The validator is stricter. `metadata.version` must equal the `package.json` version. Skills need `## Gotchas`, `## Verification`, and `## Evaluation` sections and a 100 to 320 character description. Rule headings must match skill headings. Every `must_include` term must be taught by the skill, its rule, or its references. Example files must match a task. Reference links must resolve. Every skill must be in exactly one docs category. Docs and website pages must not use em dashes or the zero-width non-joiner.
+- Every skill is now version 0.3.0. Ten skills gained an `## Evaluation` section.
+- The docs site is now built with MkDocs Material. Skill, rule, and guide pages come straight from the repository, with a catalog page per category, search, a dark theme, and a Persian overview.
 
 ## 0.2.0 - 2026-10-30
 
@@ -24,3 +38,5 @@
 - Node.js checks for catalog documents, WooCommerce webhook signatures, Persian and search text, and product JSON-LD.
 - A skill validator, a README catalog generator, tests, and a GitHub Actions workflow.
 - Installation and format notes under `docs/`.
+
+[0.3.0]: https://github.com/sadrmanesh/commerce-agent-skills/compare/v0.2.0...v0.3.0

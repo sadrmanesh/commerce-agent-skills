@@ -1,7 +1,19 @@
 {
-  "name": "commerce-agent-skills",
-  "version": "0.2.0",
+  "name": "@sadrmanesh/commerce-agent-skills",
+  "version": "0.3.0",
   "description": "Tool-agnostic skills and rules for AI coding agents that build e-commerce and marketplace products.",
+  "keywords": [
+    "agent-skills",
+    "skills",
+    "ecommerce",
+    "woocommerce",
+    "shopify",
+    "stripe",
+    "marketplace",
+    "coding-agents",
+    "rules",
+    "cli"
+  ],
   "license": "MIT",
   "author": "Naser Sadrmanesh <info.sadrmanesh@gmail.com>",
   "type": "module",
@@ -12,10 +24,8 @@
     "bin",
     "skills",
     "rules",
-    "docs",
     "scripts/lib/frontmatter.mjs",
-    "LICENSE",
-    "README.md"
+    "CHANGELOG.md"
   ],
   "engines": {
     "node": ">=20"
@@ -26,11 +36,19 @@
     "catalog:check": "node scripts/generate-catalog.mjs --check",
     "docs": "node scripts/build-docs.mjs && mkdocs build --strict -f build/mkdocs.yml",
     "test": "node --test",
-    "prepublishOnly": "node scripts/validate-skills.mjs && node scripts/generate-catalog.mjs --check && node --test"
+    "eval": "node scripts/run-evals.mjs",
+    "prepublishOnly": "node scripts/validate-skills.mjs && node scripts/generate-catalog.mjs --check && node --test",
+    "pack:check": "npm pack --dry-run"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sadrmanesh/commerce-agent-skills.git"
   },
-  "homepage": "https://sadrmanesh.github.io/commerce-agent-skills/"
+  "homepage": "https://sadrmanesh.github.io/commerce-agent-skills/",
+  "bugs": {
+    "url": "https://github.com/sadrmanesh/commerce-agent-skills/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    {
+      "id": "zarinpal-callback",
+      "task": "Write the Zarinpal callback handler for a store: what it checks, which call it makes, and when the order becomes paid.",
+      "expects": {
+        "must_include": ["Authority", "Status", "verify", "ref_id", "101"],
+        "must_not_include": ["mark the order paid when Status=OK"]
+      }
+    },
+    {
+      "id": "toman-store",
+      "task": "A WooCommerce store prices in Toman (IRT) and must charge 125,000 Toman through a bank gateway that only accepts Rial. What amount is sent?",
+      "expects": {
+        "must_include": ["1250000", "IRR", "IRT"],
+        "must_not_include": ["amount: 125000 to the Rial gateway"]
+      }
+    }
+  ]
+}

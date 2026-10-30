@@ -4,24 +4,34 @@
 
 Node.js 20 or newer for the validator, the command, and the checks. The skills themselves are plain Markdown and need nothing.
 
-## Get the library
+## Install into your project
+
+Run this from the root of your project:
+
+```bash
+npx @sadrmanesh/commerce-agent-skills init
+```
+
+It copies every skill to `.agents/skills/` and every rule to `.agents/rules/`. Nothing is downloaded after the package itself.
+
+To choose skills, or to write them where your agent looks:
+
+```bash
+npx @sadrmanesh/commerce-agent-skills list
+npx @sadrmanesh/commerce-agent-skills add woocommerce-plugin-development stripe-payments
+npx @sadrmanesh/commerce-agent-skills init --layout root
+npx @sadrmanesh/commerce-agent-skills init --skills-dir path/to/skills --rules-dir path/to/rules
+```
+
+`--no-rules` skips the rules, `--force` replaces installed skills, and `--dry-run` prints the plan. See [Command line](guides/cli.md) and [Installation](guides/installation.md).
+
+## Work on the library
 
 ```bash
 git clone https://github.com/sadrmanesh/commerce-agent-skills.git
 cd commerce-agent-skills
 node scripts/validate-skills.mjs
 ```
-
-## Add a skill to your project
-
-List the skills, then copy one into a directory your agent already scans:
-
-```bash
-node bin/commerce-agent-skills.mjs list
-node bin/commerce-agent-skills.mjs add woocommerce-plugin-development --dir ./agent-skills
-```
-
-Add `--with-rule` to copy the matching always-on rule as well. The package is not on the npm registry yet. After it is published, the same command is `npx commerce-agent-skills add <skill> --dir <path>`. See [Command line](guides/cli.md) and [Installation](guides/installation.md).
 
 ## How an agent uses a skill
 
@@ -44,7 +54,15 @@ const errors = checkAnswer(reply, {
 });
 ```
 
-An empty list means the reply passed the checks. See [Evaluation fixtures](guides/evaluations.md).
+An empty list means the reply passed the checks.
+
+To score many replies at once, save each one as `answers/<skill>/<task-id>.md` and run the eval runner:
+
+```bash
+node scripts/run-evals.mjs --answers ./answers --min-score 0.8
+```
+
+It prints a score per skill and exits with status 1 below the threshold. See [Evaluation fixtures](guides/evaluations.md).
 
 ## Next steps
 

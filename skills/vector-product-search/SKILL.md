@@ -4,7 +4,7 @@ description: "Add vector retrieval beside lexical product search, with one embed
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Vector product search
@@ -60,3 +60,7 @@ Apply filters in both retrievals. A vector hit that ignores the selected color i
 - A color filter removes other colors from the vector results, not only from the lexical results.
 - Changing the price does not change `text_hash`. Changing the title does, and that unit is re-embedded.
 - Deleting a variant removes its vector.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).
