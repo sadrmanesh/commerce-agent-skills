@@ -1,0 +1,10 @@
+woocommerce-plugin-development
+woocommerce-rest-api
+wordpress-plugin-security
+payment-gateway-integration
+product-catalog-modeling
+marketplace-search-and-ranking
+checkout-ux-and-conversion
+rtl-and-persian-localization
+order-and-webhook-reliability
+ecommerce-seo-structured-data

@@ -1,0 +1,26 @@
+name: Bug report
+description: A skill, rule, or script disagrees with the documented platform behavior or fails its check.
+title: "[Bug] "
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill or file
+      description: Skill directory, rule file, or script path.
+      placeholder: skills/woocommerce-plugin-development
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What is wrong
+      description: Quote the instruction and say which API, hook, or UI behavior disagrees with it.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: Link the developer documentation or the version you checked, when you have one.
+    validations:
+      required: false

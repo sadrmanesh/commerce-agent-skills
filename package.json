@@ -1,0 +1,23 @@
+{
+  "name": "commerce-agent-skills",
+  "version": "0.1.0",
+  "description": "Tool-agnostic skills and rules for AI coding agents that build e-commerce and marketplace products.",
+  "license": "MIT",
+  "author": "Naser Sadrmanesh <info.sadrmanesh@gmail.com>",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node scripts/validate-skills.mjs",
+    "catalog": "node scripts/generate-catalog.mjs",
+    "catalog:check": "node scripts/generate-catalog.mjs --check",
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadrmanesh/commerce-agent-skills.git"
+  },
+  "homepage": "https://github.com/sadrmanesh/commerce-agent-skills"
+}

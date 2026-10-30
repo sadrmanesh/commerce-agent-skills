@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Cotton shirt",
+  "image": "https://shop.example/shirt.jpg",
+  "description": "Short-sleeve cotton shirt.",
+  "sku": "SHIRT-BLUE",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://shop.example/shirt?color=blue",
+    "priceCurrency": "USD",
+    "price": 19.0,
+    "availability": "https://schema.org/InStock"
+  }
+}

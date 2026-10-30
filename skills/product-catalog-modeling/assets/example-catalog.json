@@ -1,0 +1,45 @@
+{
+  "products": [
+    {
+      "id": "shirt",
+      "type": "variable",
+      "sku": null,
+      "name": "Cotton shirt",
+      "attributes": [
+        {
+          "code": "color",
+          "name": "Color",
+          "options": ["blue", "red"],
+          "variation": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "shirt-blue",
+          "sku": "SHIRT-BLUE",
+          "attributes": { "color": "blue" },
+          "price": "19.00",
+          "currency": "USD",
+          "stock": { "managed": true, "quantity": 5, "backorders": "no", "status": "instock" }
+        },
+        {
+          "id": "shirt-red",
+          "sku": "SHIRT-RED",
+          "attributes": { "color": "red" },
+          "price": "21.00",
+          "currency": "USD",
+          "stock": { "managed": true, "quantity": 0, "backorders": "no", "status": "outofstock" }
+        }
+      ]
+    },
+    {
+      "id": "gift-card",
+      "type": "simple",
+      "sku": "GIFT-25",
+      "name": "Gift card",
+      "price": "25.00",
+      "currency": "USD",
+      "stock": { "managed": false, "quantity": null, "backorders": "no", "status": "instock" }
+    }
+  ]
+}
