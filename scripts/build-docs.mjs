@@ -137,14 +137,22 @@ export function slug(text) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-export function prepareSkillMarkdown(markdown) {
-  return markdown
+const sourceUrl = "https://github.com/sadrmanesh/commerce-agent-skills/blob/main";
+
+export function prepareSkillMarkdown(markdown, skillName) {
+  let prepared = markdown
     .replaceAll(/\(references\/([^)/]+)\.md\)/g, (_, name) => `(#reference-${slug(`${name}.md`)})`)
     .replaceAll("(evals/tasks.json)", "(#evaluation)");
+  if (skillName) {
+    prepared = prepared.replaceAll(/\(((?:assets|scripts)\/[^)\s]+)\)/g, `(${sourceUrl}/skills/${skillName}/$1)`);
+  }
+  return prepared;
 }
 
 export function prepareReadme(markdown) {
-  return markdown.replaceAll(/\(skills\/([^)/]+)\/SKILL\.md\)/g, "(skills/$1.html)");
+  return markdown
+    .replaceAll(/\(skills\/([^)/]+)\/SKILL\.md\)/g, "(skills/$1.html)")
+    .replaceAll("(LICENSE)", `(${sourceUrl}/LICENSE)`);
 }
 
 function inline(text) {
@@ -229,7 +237,7 @@ export async function buildSite(repoRoot, outDir) {
 
   for (const skill of ordered) {
     const references = await referenceSections(skill.dir);
-    const body = `<p class="lead">${escapeHtml(skill.data.description)}</p>\n${renderMarkdown(prepareSkillMarkdown(skill.body))}\n${references}`;
+    const body = `<p class="lead">${escapeHtml(skill.data.description)}</p>\n${renderMarkdown(prepareSkillMarkdown(skill.body, skill.name))}\n${references}`;
     await writeFile(path.join(outDir, "skills", `${skill.name}.html`), page({
       title: skill.name,
       depth: 1,

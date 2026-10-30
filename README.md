@@ -2,6 +2,8 @@
 
 Skills and rules for AI coding agents that build e-commerce and marketplace products.
 
+**Documentation:** <https://sadrmanesh.github.io/commerce-agent-skills/>
+
 The skills follow the [Agent Skills](https://agentskills.io/specification) format: a folder, a `SKILL.md` file with `name` and `description`, and optional reference files and scripts. An agent that supports that format can load them. The format does not name an install path. [Installation](docs/installation.md) explains how to point your agent at these folders.
 
 Version 0.2.0 is the professional phase of the open library. It keeps the 0.1.0 WooCommerce, payment, catalog, search, checkout, localization, webhook, and structured-data skills, and adds multi-vendor payouts, Shopify apps, a Next.js storefront, Merchant Center feeds, tax and shipping, subscriptions, fraud review, vector search, description guardrails, and conversion events.
