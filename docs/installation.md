@@ -31,6 +31,24 @@ npx @sadrmanesh/commerce-agent-skills init
 
 Keep the token in the `GITHUB_TOKEN` environment variable, not in the file. Remove the scope line to go back to npmjs.com.
 
+## Download from Hugging Face
+
+Each release is also published as the [commerce-agent-skills dataset](https://huggingface.co/datasets/sadrmanesh/commerce-agent-skills) on Hugging Face. It holds the same `skills/` and `rules/` folders, plus a `skills` table with every `SKILL.md`, rule, reference note, and script, and an `evals` table with every evaluation task and its worked example. To copy the folders without Node.js:
+
+```bash
+hf download sadrmanesh/commerce-agent-skills --repo-type dataset \
+  --include "skills/*" "rules/*" --local-dir .agents
+```
+
+To load the tables, for example to index the skills or score answers against the tasks:
+
+```python
+from datasets import load_dataset
+
+skills = load_dataset("sadrmanesh/commerce-agent-skills", "skills", split="train")
+evals = load_dataset("sadrmanesh/commerce-agent-skills", "evals", split="test")
+```
+
 ## Install one skill
 
 1. Copy the skill directory, for example `skills/woocommerce-plugin-development/`.

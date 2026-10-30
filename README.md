@@ -2,7 +2,7 @@
 
 Skills and rules for AI coding agents that build e-commerce and marketplace products.
 
-**Documentation:** <https://sadrmanesh.github.io/commerce-agent-skills/>
+**Documentation:** <https://sadrmanesh.github.io/commerce-agent-skills/> · **Dataset:** [Hugging Face](https://huggingface.co/datasets/sadrmanesh/commerce-agent-skills)
 
 The skills follow the [Agent Skills](https://agentskills.io/specification) format: a folder, a `SKILL.md` file with `name` and `description`, and optional reference files and scripts. An agent that supports that format can load them. The format does not name an install path. [Installation](docs/installation.md) explains how to point your agent at these folders.
 
