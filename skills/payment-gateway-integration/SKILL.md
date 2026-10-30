@@ -4,7 +4,7 @@ description: "Integrate a payment provider with idempotent charges, signature-ch
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Payment gateway integration
@@ -84,3 +84,7 @@ Show a pending confirmation when the webhook has not arrived yet. Poll your own 
 - A signed webhook with the wrong amount does not mark the order paid.
 - A forged browser return without a matching provider payment does not mark the order paid.
 - A declined payment returns the shopper to checkout with the cart intact and the order not paid.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

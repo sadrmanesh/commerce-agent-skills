@@ -1,0 +1,29 @@
+{
+  "tasks": [
+    {
+      "id": "extend-woocommerce-schema",
+      "task": "Add a brand to the product structured data WooCommerce already prints, without a second Product node.",
+      "expects": {
+        "must_include": [
+          "woocommerce_structured_data_product"
+        ],
+        "must_not_include": [
+          "second Product"
+        ]
+      }
+    },
+    {
+      "id": "variant-offer",
+      "task": "Mark up the blue variant that the page sells, including a numeric price and in-stock availability.",
+      "expects": {
+        "must_include": [
+          "priceCurrency",
+          "InStock"
+        ],
+        "must_not_include": [
+          "19,00 USD"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "store-tax-lines",
+      "task": "Persist the tax calculated for an order so a later rate-table edit does not change that order.",
+      "expects": {
+        "must_include": [
+          "rate id",
+          "minor"
+        ],
+        "must_not_include": [
+          "hard-coded 20%"
+        ]
+      }
+    },
+    {
+      "id": "unknown-zone",
+      "task": "Quote shipping only from the destination zone and refuse to invent a free rate when no zone matches.",
+      "expects": {
+        "must_include": [
+          "destination",
+          "no zone"
+        ],
+        "must_not_include": [
+          "cost of 0"
+        ]
+      }
+    }
+  ]
+}

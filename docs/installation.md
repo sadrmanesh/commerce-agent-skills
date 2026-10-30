@@ -2,6 +2,17 @@
 
 commerce-agent-skills uses the [Agent Skills](https://agentskills.io/specification) layout. The specification defines the folder and the `SKILL.md` file. It does not define a single directory where every agent looks. Install the folders into the skills location your agent documents, then reload the session if that agent caches the skill list at startup.
 
+## Install with the command
+
+From a checkout of this repository:
+
+```bash
+node bin/commerce-agent-skills.mjs list
+node bin/commerce-agent-skills.mjs add woocommerce-rest-api --dir /path/to/agent-skills
+```
+
+The package name is `commerce-agent-skills`. It is not published yet. After a publish, `npx commerce-agent-skills add <skill> --dir <path>` is the same command. See [cli.md](cli.md).
+
 ## Install one skill
 
 1. Copy the skill directory, for example `skills/woocommerce-plugin-development/`.

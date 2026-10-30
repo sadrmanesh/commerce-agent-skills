@@ -7,9 +7,12 @@ This project follows the [Agent Skills specification](https://agentskills.io/spe
 ```text
 skill-name/
 ├── SKILL.md
-├── references/    optional notes, loaded when the skill says to read them
-├── scripts/       optional Node.js tools
-└── assets/        optional templates and examples
+├── references/          optional notes, loaded when the skill says to read them
+├── scripts/             optional Node.js tools
+├── assets/              optional templates and examples
+└── evals/
+    ├── tasks.json       example tasks and expected checks
+    └── examples/<id>.md worked answer that passes those checks
 ```
 
 `SKILL.md` starts with YAML frontmatter and then Markdown instructions.
@@ -21,7 +24,7 @@ description: "What the skill does. Use when the task looks like this."
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 ```
 
@@ -35,7 +38,8 @@ Required by this repository:
 - The description includes the words `Use when`.
 - `license` is `MIT`.
 - `metadata.author` is `Naser Sadrmanesh`.
-- `metadata.version` is a quoted string, currently `"0.1.0"`.
+- `metadata.version` is a quoted string, currently `"0.2.0"`.
+- `evals/tasks.json` has at least two tasks, and each task has a worked example that passes its checks.
 - `SKILL.md` is at most 500 lines.
 - Every file under `references/`, `scripts/`, and `assets/` is mentioned from `SKILL.md`.
 - A skill that ships `scripts/` sets `compatibility` and the scripts run on Node.js 20 or newer with no extra packages.

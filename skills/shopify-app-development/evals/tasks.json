@@ -1,0 +1,29 @@
+{
+  "tasks": [
+    {
+      "id": "verify-webhook",
+      "task": "Verify a Shopify HTTPS webhook with the app client secret before reading the topic or shop domain.",
+      "expects": {
+        "must_include": [
+          "X-Shopify-Hmac-Sha256",
+          "raw body"
+        ],
+        "must_not_include": [
+          "express.json()"
+        ]
+      }
+    },
+    {
+      "id": "dedupe-delivery",
+      "task": "Process a retried Shopify order webhook once using the delivery id Shopify sends.",
+      "expects": {
+        "must_include": [
+          "X-Shopify-Webhook-Id"
+        ],
+        "must_not_include": [
+          "shop query parameter"
+        ]
+      }
+    }
+  ]
+}

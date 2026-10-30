@@ -3,6 +3,7 @@ import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { validateSkillEvals } from "./lib/evals.mjs";
 import {
   RULE_LINE_MAX,
   RULE_LINE_MIN,
@@ -44,6 +45,7 @@ export async function validateRepository(repoRoot = root) {
     errors.push(...validateSkillRecord(skill));
     errors.push(...(await validateSkillFiles(skill)));
     errors.push(...(await validateRule(repo.rulesDir, skill.name)));
+    errors.push(...(await validateSkillEvals(skill)));
   }
 
   const ruleEntries = await listFiles(repo.rulesDir);

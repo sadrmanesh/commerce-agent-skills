@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "server-price",
+      "task": "Render a WooCommerce product price in a Next.js server component without shipping the consumer secret to the browser.",
+      "expects": {
+        "must_include": [
+          "server",
+          "consumer secret"
+        ],
+        "must_not_include": [
+          "localStorage"
+        ]
+      }
+    },
+    {
+      "id": "revalidate-stock",
+      "task": "Refresh a cached product page when a verified webhook says the variant stock changed.",
+      "expects": {
+        "must_include": [
+          "revalidateTag",
+          "product:"
+        ],
+        "must_not_include": [
+          "force-cache"
+        ]
+      }
+    }
+  ]
+}

@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The search-text normalizer requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Marketplace search and ranking
@@ -87,3 +87,7 @@ Write the formula down in the service that serves results. A boost that exists o
 - Out-of-stock policy matches the shop setting on page 1 and on the next page.
 - An English stemmer is not applied to a Persian title field.
 - A sponsored unit is visibly marked and is not the only explanation for an organic ranking change.
+
+## Evaluation
+
+Worked examples and the checks they must satisfy are in [evals/tasks.json](evals/tasks.json).

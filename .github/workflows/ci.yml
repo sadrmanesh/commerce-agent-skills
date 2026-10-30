@@ -28,5 +28,8 @@ jobs:
       - name: Check the generated README catalog
         run: node scripts/generate-catalog.mjs --check
 
+      - name: Build the docs site
+        run: node scripts/build-docs.mjs --out site
+
       - name: Run tests
         run: node --test

@@ -71,8 +71,8 @@ export function validateSkillRecord(skill) {
   if (author !== "Naser Sadrmanesh") {
     errors.push(`${prefix}: metadata.author must be "Naser Sadrmanesh"`);
   }
-  if (version !== "0.1.0") {
-    errors.push(`${prefix}: metadata.version must be "0.1.0"`);
+  if (version !== "0.2.0") {
+    errors.push(`${prefix}: metadata.version must be "0.2.0"`);
   }
   if (skill.lineCount > SKILL_LINE_LIMIT) {
     errors.push(`${prefix}: SKILL.md has ${skill.lineCount} lines; keep it at or under ${SKILL_LINE_LIMIT}`);

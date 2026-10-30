@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "purchase-once",
+      "task": "Emit a purchase event after payment succeeds, with the order number as the transaction id and value excluding tax.",
+      "expects": {
+        "must_include": [
+          "transaction_id",
+          "value"
+        ],
+        "must_not_include": [
+          "transaction_id: \"\""
+        ]
+      }
+    },
+    {
+      "id": "variant-item-id",
+      "task": "Track add_to_cart for the blue shirt variant with that variant's SKU, not only the parent product id.",
+      "expects": {
+        "must_include": [
+          "add_to_cart",
+          "SHIRT-BLUE"
+        ],
+        "must_not_include": [
+          "button click purchase"
+        ]
+      }
+    }
+  ]
+}

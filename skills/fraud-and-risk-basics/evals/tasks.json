@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "wait-for-3ds",
+      "task": "Do not capture a card payment while 3-D Secure is still waiting for the shopper.",
+      "expects": {
+        "must_include": [
+          "3-D Secure",
+          "do not capture"
+        ],
+"must_not_include": [
+        "4111111111111111"
+      ]
+      }
+    },
+    {
+      "id": "review-queue",
+      "task": "Queue a high-amount AVS mismatch for a person to capture or void, and ignore a risk flag from the browser.",
+      "expects": {
+        "must_include": [
+          "review",
+          "AVS"
+        ],
+        "must_not_include": [
+          "risk: low"
+        ]
+      }
+    }
+  ]
+}

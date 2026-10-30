@@ -8,3 +8,13 @@ checkout-ux-and-conversion
 rtl-and-persian-localization
 order-and-webhook-reliability
 ecommerce-seo-structured-data
+multi-vendor-payouts
+shopify-app-development
+headless-nextjs-storefront
+google-merchant-product-feeds
+tax-and-shipping
+subscription-billing
+fraud-and-risk-basics
+vector-product-search
+product-description-guardrails
+conversion-event-tracking

@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "facts-only",
+      "task": "Write a cotton shirt description that states only the catalog facts and the real price.",
+      "expects": {
+        "must_include": [
+          "19.00 USD",
+          "cotton"
+        ],
+        "must_not_include": [
+          "clinically proven"
+        ]
+      }
+    },
+    {
+      "id": "label-generated",
+      "task": "Mark a generated Merchant Center description so it is not submitted as a human-written description attribute.",
+      "expects": {
+        "must_include": [
+          "trained_algorithmic_media",
+          "structured_description"
+        ],
+        "must_not_include": [
+          "organic cotton"
+        ]
+      }
+    }
+  ]
+}

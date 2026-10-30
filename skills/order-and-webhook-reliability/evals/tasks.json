@@ -1,0 +1,29 @@
+{
+  "tasks": [
+    {
+      "id": "verify-raw-body",
+      "task": "Verify a WooCommerce webhook signature against the exact posted bytes before parsing the JSON.",
+      "expects": {
+        "must_include": [
+          "raw body",
+          "HMAC-SHA256"
+        ],
+        "must_not_include": [
+          "JSON.stringify"
+        ]
+      }
+    },
+    {
+      "id": "dedupe-resource-version",
+      "task": "Dedupe an order.updated webhook when WooCommerce delivers it more than once.",
+      "expects": {
+        "must_include": [
+          "date_modified_gmt"
+        ],
+        "must_not_include": [
+          "X-WC-Webhook-Delivery-ID"
+        ]
+      }
+    }
+  ]
+}

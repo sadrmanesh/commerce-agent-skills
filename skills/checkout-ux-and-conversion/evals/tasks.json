@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "id": "guest-total",
+      "task": "Let a guest see shipping and the charged total before paying, without creating a password first.",
+      "expects": {
+        "must_include": [
+          "guest",
+          "shipping"
+        ],
+        "must_not_include": [
+          "password is required"
+        ]
+      }
+    },
+    {
+      "id": "single-submit",
+      "task": "Stop a double click on the pay control from creating two orders for one cart.",
+      "expects": {
+        "must_include": [
+          "idempotency",
+          "disable"
+        ],
+        "must_not_include": [
+          "Math.random()"
+        ]
+      }
+    }
+  ]
+}
