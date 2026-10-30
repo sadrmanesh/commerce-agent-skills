@@ -1,5 +1,4 @@
 ---
-title: commerce-agent-skills
 description: Agent Skills and rules for AI coding agents building e-commerce and marketplace products.
 hide:
   - navigation
