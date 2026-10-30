@@ -72,6 +72,8 @@ npx @sadrmanesh/commerce-agent-skills init --skills-dir path/to/skills --rules-d
 
 `init` skips skills that are already installed, `--force` replaces them, and `--dry-run` shows what would be written. From a checkout, `node bin/commerce-agent-skills.mjs` takes the same arguments. Details are in [docs/installation.md](docs/installation.md) and [docs/cli.md](docs/cli.md).
 
+The package is on npmjs.com and, with the same name, on GitHub Packages. npmjs.com is the default; [docs/installation.md](docs/installation.md#install-from-github-packages) has the `.npmrc` lines for GitHub Packages.
+
 ## Work on the library
 
 Clone the repository and check the skills:
@@ -113,7 +115,7 @@ The skill format is documented in [docs/skill-format.md](docs/skill-format.md). 
 
 The documentation lives at [sadrmanesh.github.io/commerce-agent-skills](https://sadrmanesh.github.io/commerce-agent-skills/). It is built with MkDocs Material, and the skill, rule, and guide pages are generated from this repository by `scripts/build-docs.mjs`, so they always match the files here. `.github/workflows/pages.yml` deploys it on pushes to `main`. See [docs/github-pages.md](docs/github-pages.md).
 
-`.github/workflows/release.yml` runs when a `vX.Y.Z` tag is pushed. It checks that the tag matches `package.json`, runs the validator, evals, and tests, creates the GitHub release if it does not exist, and publishes `@sadrmanesh/commerce-agent-skills` to npm. Running it by hand with a version tags that version first.
+`.github/workflows/release.yml` runs when a `vX.Y.Z` tag is pushed. It checks that the tag matches `package.json`, runs the validator, evals, and tests, creates the GitHub release if it does not exist, and publishes `@sadrmanesh/commerce-agent-skills` to npm and to GitHub Packages, which uses the workflow's `GITHUB_TOKEN`. Running it by hand with a version tags that version first.
 
 ## Roadmap
 

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Version to tag and publish. Must match package.json, for example 0.3.0
+        description: Version to tag and publish. Must match package.json, for example 0.3.1
         required: true
         type: string
 
@@ -22,6 +22,8 @@ jobs:
   release:
     name: Release and publish to npm
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +48,7 @@ jobs:
             version="${REQUESTED_VERSION#v}"
           fi
           if ! [[ "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Version must look like 0.3.0" >&2
+            echo "Version must look like 0.3.1" >&2
             exit 1
           fi
           pkg="$(node -p "require('./package.json').version")"
@@ -111,3 +113,37 @@ jobs:
             exit 0
           fi
           npm publish --access public --provenance
+
+  github-packages:
+    name: Publish to GitHub Packages
+    needs: release
+    if: ${{ !github.event.repository.private }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: v${{ needs.release.outputs.version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+          scope: '@sadrmanesh'
+
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.release.outputs.version }}
+        run: |
+          set -euo pipefail
+          name="$(node -p "require('./package.json').name")"
+          if npm view "${name}@${VERSION}" version --registry https://npm.pkg.github.com >/dev/null 2>&1; then
+            echo "${name}@${VERSION} is already on GitHub Packages"
+            exit 0
+          fi
+          npm publish --registry https://npm.pkg.github.com

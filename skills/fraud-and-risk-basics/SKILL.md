@@ -4,7 +4,7 @@ description: "Hold or review risky payments using provider signals, velocity, an
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.0"
+  version: "0.3.1"
 ---
 
 # Fraud and risk basics

@@ -49,6 +49,8 @@ npx @sadrmanesh/commerce-agent-skills init --skills-dir path/to/skills --rules-d
 
 گزینه `--no-rules` فقط مهارت ها را کپی می کند، `--force` مهارت های نصب شده را جایگزین می کند و `--dry-run` فقط نشان می دهد چه فایل هایی نوشته خواهند شد.
 
+بسته اصلی روی npmjs.com است و هر نسخه با همین نام در GitHub Packages هم منتشر می شود. برای نصب از GitHub Packages کافی است در فایل `.npmrc` دامنه `@sadrmanesh` را به `https://npm.pkg.github.com` ببرید و یک توکن با دسترسی `read:packages` بدهید. جزئیات در [راهنمای نصب](guides/installation.md#install-from-github-packages) آمده است.
+
 ## راهنماها
 
 - [شروع کار](getting-started.md)

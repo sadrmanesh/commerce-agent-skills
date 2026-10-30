@@ -4,7 +4,7 @@ description: "Run returns as a tracked RMA from request to inspection, refund on
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.0"
+  version: "0.3.1"
 ---
 
 # Returns and refunds
