@@ -4,6 +4,8 @@ Skills and rules for AI coding agents that build e-commerce and marketplace prod
 
 **Documentation:** <https://sadrmanesh.github.io/commerce-agent-skills/> · **Dataset:** [Hugging Face](https://huggingface.co/datasets/sadrmanesh/commerce-agent-skills)
 
+**Read more:** [Treat agent skills like code: evals, a strict validator, and an npx installer for commerce skills](https://dev.to/sadrmanesh/treat-agent-skills-like-code-evals-a-strict-validator-and-an-npx-installer-for-commerce-skills-13dk) on Dev.to
+
 The skills follow the [Agent Skills](https://agentskills.io/specification) format: a folder, a `SKILL.md` file with `name` and `description`, and optional reference files and scripts. An agent that supports that format can load them. The format does not name an install path. [Installation](docs/installation.md) explains how to point your agent at these folders.
 
 Version 0.3.0 adds store operations to the library. It keeps the twenty skills from 0.1.0 and 0.2.0 and adds Stripe payments, Iranian payment gateways such as Zarinpal, inventory across warehouses, returns and refunds, B2B pricing, catalog import and migration, storefront accessibility, storefront performance, and MCP store tooling. It also adds a stricter validator and an eval runner that scores answers against the fixtures.
