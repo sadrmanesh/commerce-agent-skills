@@ -2,10 +2,17 @@
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-10-31
+
 ### Added
 
+- A `redelivery-after-timeout` eval task and worked example for `order-and-webhook-reliability`. The handler stored and applied the event, the sender timed out before the 2xx arrived and redelivered, and the answer must return 2xx without repeating a side effect such as a second fulfillment, email, or stock decrement. The skill explains this case, its verification list and gotchas cover it, and the rule has a matching line.
 - The skills, rules, and evaluation tasks as a Hugging Face dataset, <https://huggingface.co/datasets/sadrmanesh/commerce-agent-skills>, with a `skills` table, an `evals` table, and the installable folders. The README, the docs home page, and the installation guide link to it.
 - `.github/workflows/mirror.yml`, which mirrors `main` and tags to `gitlab.com/sadrmanesh/commerce-agent-skills` when the `GITLAB_TOKEN` secret is set, and skips cleanly otherwise.
+
+### Changed
+
+- The package and every skill are now version 0.3.2.
 
 ## [0.3.1] - 2026-10-30
 

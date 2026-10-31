@@ -4,7 +4,7 @@ description: "Call the WooCommerce REST API at wc/v3, including authentication, 
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.1"
+  version: "0.3.2"
 ---
 
 # WooCommerce REST API

@@ -4,7 +4,7 @@ description: "Build a Next.js storefront that loads catalog data on the server, 
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.1"
+  version: "0.3.2"
 ---
 
 # Headless Next.js storefront

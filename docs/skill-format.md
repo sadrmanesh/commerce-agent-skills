@@ -24,7 +24,7 @@ description: "What the skill does. Use when the task looks like this."
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.1"
+  version: "0.3.2"
 ---
 ```
 
@@ -39,7 +39,7 @@ Required by this repository:
 - `license` is `MIT`.
 - `metadata.author` is `Naser Sadrmanesh`.
 - The description is 100 to 320 characters.
-- `metadata.version` is a quoted string equal to the `version` in `package.json`, currently `"0.3.1"`.
+- `metadata.version` is a quoted string equal to the `version` in `package.json`, currently `"0.3.2"`.
 - `SKILL.md` has `## Gotchas`, `## Verification`, and `## Evaluation` sections.
 - The first heading of `rules/<name>.md` matches the first heading of `SKILL.md`.
 - Every `must_include` string in `evals/tasks.json` appears, ignoring case, in `SKILL.md`, the rule, or a reference file. A fixture must not test something the skill never teaches.

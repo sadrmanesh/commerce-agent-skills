@@ -1,6 +1,6 @@
 {
   "name": "@sadrmanesh/commerce-agent-skills",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Tool-agnostic skills and rules for AI coding agents that build e-commerce and marketplace products.",
   "keywords": [
     "agent-skills",

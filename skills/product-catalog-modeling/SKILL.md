@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The catalog checker requires Node.js 20 or newer. No network access."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.1"
+  version: "0.3.2"
 ---
 
 # Product catalog modeling

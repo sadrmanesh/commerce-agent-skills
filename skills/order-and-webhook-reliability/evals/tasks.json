@@ -24,6 +24,21 @@
           "X-WC-Webhook-Delivery-ID"
         ]
       }
+    },
+    {
+      "id": "redelivery-after-timeout",
+      "task": "The order.paid handler stored and applied the event and created the fulfillment, but WooCommerce timed out before the 2xx arrived and posted the same event again. Make the retry safe.",
+      "expects": {
+        "must_include": [
+          "applied",
+          "2xx",
+          "side effect",
+          "timeout"
+        ],
+        "must_not_include": [
+          "X-WC-Webhook-Delivery-ID"
+        ]
+      }
     }
   ]
 }
