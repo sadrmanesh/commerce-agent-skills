@@ -5,7 +5,7 @@ license: MIT
 compatibility: "The allocation checker needs Node.js 20 or newer and no packages."
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.1"
+  version: "0.3.2"
 ---
 
 # Inventory and multi-warehouse

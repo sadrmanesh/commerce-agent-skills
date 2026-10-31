@@ -4,7 +4,7 @@ description: "Split a marketplace order by vendor, record commission as ledger e
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.1"
+  version: "0.3.2"
 ---
 
 # Multi-vendor payouts
