@@ -71,6 +71,10 @@ Commerce code fails in expensive ways: a webhook processed twice, a price in str
 
 </div>
 
+## Technical report
+
+[commerce-agent-skills: Architectural Specification, Domain Constraints, and Evaluation Framework for E-Commerce AI Coding Agents](https://doi.org/10.5281/zenodo.23883598). M. N. Sadrmanesh, Zenodo, 2026. DOI: [10.5281/zenodo.23883598](https://doi.org/10.5281/zenodo.23883598)
+
 ## License
 
 MIT. Copyright (c) 2026 Naser Sadrmanesh.

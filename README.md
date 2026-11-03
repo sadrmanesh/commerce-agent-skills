@@ -134,6 +134,24 @@ Later releases can add:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Run the validator before opening a pull request. New skills need a matching rule, a row in `skills/catalog-order.txt`, and a place in `website/categories.json`.
 
+## Technical report
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23883598.svg)](https://doi.org/10.5281/zenodo.23883598)
+
+commerce-agent-skills: Architectural Specification, Domain Constraints, and Evaluation Framework for E-Commerce AI Coding Agents. M. N. Sadrmanesh, Zenodo, 2026. <https://doi.org/10.5281/zenodo.23883598>
+
+```bibtex
+@techreport{sadrmanesh2026commerceagentskills,
+  author      = {Sadrmanesh, Mohammad Naser},
+  title       = {commerce-agent-skills: Architectural Specification, Domain Constraints, and Evaluation Framework for E-Commerce AI Coding Agents},
+  institution = {Zenodo},
+  year        = {2026},
+  version     = {1.0},
+  doi         = {10.5281/zenodo.23883598},
+  url         = {https://doi.org/10.5281/zenodo.23883598}
+}
+```
+
 ## License
 
 [MIT](LICENSE). Copyright (c) 2026 Naser Sadrmanesh.
