@@ -442,6 +442,10 @@ export async function buildSite(repoRoot = root, outDir = path.join(repoRoot, "b
   ].join("\n");
   await writeFile(path.join(configDir, "mkdocs.yml"), config);
 
+  // Theme overrides, resolved relative to the generated config.
+  await rm(path.join(configDir, "overrides"), { recursive: true, force: true });
+  await cp(path.join(repoRoot, "overrides"), path.join(configDir, "overrides"), { recursive: true });
+
   return { skills: repo.skills.length, categories: categories.length, guides: GUIDES.length, outDir };
 }
 
