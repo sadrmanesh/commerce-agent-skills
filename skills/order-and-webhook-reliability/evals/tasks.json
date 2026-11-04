@@ -55,6 +55,23 @@
           "lock the whole table"
         ]
       }
+    },
+    {
+      "id": "redelivery-after-partial-failure",
+      "task": "The first delivery of an order.paid webhook inserts the inbox row, then the process crashes before the order change commits or the 2xx is sent. The sender redelivers the same event. The handler sees the inbox row, returns 2xx, and the order is never marked paid. Fix it so the redelivery completes the work exactly once, and keep an audit entry for each delivery that says what it did.",
+      "expects": {
+        "must_include": [
+          "pending",
+          "same transaction",
+          "audit",
+          "exactly one",
+          "rolled back"
+        ],
+        "must_not_include": [
+          "X-WC-Webhook-Delivery-ID",
+          "delete the inbox row"
+        ]
+      }
     }
   ]
 }

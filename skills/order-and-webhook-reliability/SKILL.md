@@ -38,6 +38,8 @@ The most common duplicate is a redelivery after a timeout. The handler stored an
 
 The same event can also arrive twice at once, for example when two workers or two app servers receive parallel deliveries. A check-then-insert (read the inbox, find nothing, then insert and apply) lets both requests pass the check and apply twice. Claim the event with one atomic insert against the unique key instead, such as `INSERT ... ON CONFLICT DO NOTHING`, and let only the request whose insert created the row apply the change. The other concurrent request acknowledges with 2xx and applies nothing.
 
+A claim must not hide a partial failure. If the first delivery inserts the inbox row, then crashes before the order change commits, a redelivery that sees the row and returns 2xx loses the event for good. Apply the change in the same transaction that marks the row `applied`, so a crash rolls both back, and treat a row still `pending` after a timeout as retryable: the redelivery reclaims it and completes the apply. Record an audit entry for every delivery, keyed on the event id, with what that delivery did, for example `failed: rolled back before apply` and then `applied`, so the order history shows one state change and both attempts.
+
 ## Apply rules
 
 - Compare amounts in integer minor units before marking an order paid.
@@ -88,6 +90,7 @@ There is no separate backoff retry of one payload described here. Timeouts and r
 - Returning 200 before the inbox write loses the event if the process dies.
 - A slow handler that applies the event and sends the email before answering invites a timeout, and the redelivery sends the email again unless the email is tied to the `applied` row.
 - Checking the inbox with a `SELECT` and inserting afterwards is a race. Two concurrent deliveries of the same event both see no row and both apply it. Let the unique key decide.
+- Treating any existing inbox row as done is a lost update. A row left `pending` by a crashed first attempt must be retried, not acknowledged.
 - Applying events in arrival order without a version can reopen a canceled order.
 - Logging the raw body of a payment webhook can capture data you did not mean to keep. Store the body in the inbox with restricted access, and keep card data out of application logs.
 - A shared webhook secret across shops makes a signature from shop A valid on shop B. Use one secret per subscription.
@@ -98,6 +101,7 @@ There is no separate backoff retry of one payload described here. Timeouts and r
 - A duplicated delivery creates one inbox row and one state change.
 - A redelivery after a sender timeout, where the first attempt was stored and applied but the 2xx never arrived, returns 2xx and repeats no side effect: one fulfillment, one email, one stock decrement.
 - Two concurrent deliveries of the same event produce one inbox row, one apply, and one set of side effects; the losing request returns 2xx.
+- A first delivery that crashes after the claim and before the apply commits, followed by a redelivery, produces exactly one state change and one audit entry per delivery: the first marked failed and rolled back, the second marked applied.
 - An older event received after a newer one does not downgrade a paid order.
 - A wrong amount does not mark the order paid.
 - Stopping the database makes the handler return a retryable status and, after recovery, the redelivered event still applies once.

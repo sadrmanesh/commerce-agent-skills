@@ -1,0 +1,3 @@
+Make the redelivery complete the unfinished work, and audit both attempts.
+
+Claim the inbox row as `pending`, then apply the paid transition and mark the row `applied` in the same transaction, so the crash rolls back the order change and its side effects together. When the redelivery finds the row still `pending` past its lease, it reclaims it with a conditional update and applies the change once. Write an audit entry for each delivery keyed on the event id: the first records `failed: rolled back before apply`, the second records `applied`. The order ends with exactly one state change and two audit entries, and the redelivery returns 2xx.

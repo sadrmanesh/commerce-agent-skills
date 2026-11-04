@@ -8,6 +8,7 @@
 - Make the paid transition idempotent so stock and receipt email run once.
 - Treat a redelivery after a timeout as a duplicate: if the inbox row is already `applied`, return 2xx and run no side effect again.
 - Claim each event with an atomic insert on the unique key, such as `ON CONFLICT DO NOTHING`, so concurrent duplicates apply once. Do not check the inbox first and insert afterwards.
+- Let a redelivery finish an event whose first attempt failed partway: a row left `pending` is retryable, not a duplicate. Write one audit entry per delivery that says what it did.
 - Write outbound webhooks from an outbox in the same transaction as the order change.
 - Acknowledge a WooCommerce activation ping with 2xx and do not create an order from it.
 - Return a retryable error only when the event was not stored. WooCommerce disables a webhook after more than five consecutive failures.
