@@ -36,6 +36,8 @@ Store: event id, topic, resource id, raw body, signature verification time, and 
 
 The most common duplicate is a redelivery after a timeout. The handler stored and applied the event, but the sender timed out before the 2xx arrived and posts the same event again, often with a new delivery id. The retry must find the inbox row already `applied`, return 2xx, and run no side effect: no second fulfillment, no second confirmation email, no second stock decrement. This only holds when each side effect is recorded in the same transaction that marks the row `applied`, or is keyed on the event id where it runs.
 
+The same event can also arrive twice at once, for example when two workers or two app servers receive parallel deliveries. A check-then-insert (read the inbox, find nothing, then insert and apply) lets both requests pass the check and apply twice. Claim the event with one atomic insert against the unique key instead, such as `INSERT ... ON CONFLICT DO NOTHING`, and let only the request whose insert created the row apply the change. The other concurrent request acknowledges with 2xx and applies nothing.
+
 ## Apply rules
 
 - Compare amounts in integer minor units before marking an order paid.
@@ -85,6 +87,7 @@ There is no separate backoff retry of one payload described here. Timeouts and r
 - Parsing JSON and signing `JSON.stringify(object)` will not match. The sender signed the original bytes, including key order and spacing.
 - Returning 200 before the inbox write loses the event if the process dies.
 - A slow handler that applies the event and sends the email before answering invites a timeout, and the redelivery sends the email again unless the email is tied to the `applied` row.
+- Checking the inbox with a `SELECT` and inserting afterwards is a race. Two concurrent deliveries of the same event both see no row and both apply it. Let the unique key decide.
 - Applying events in arrival order without a version can reopen a canceled order.
 - Logging the raw body of a payment webhook can capture data you did not mean to keep. Store the body in the inbox with restricted access, and keep card data out of application logs.
 - A shared webhook secret across shops makes a signature from shop A valid on shop B. Use one secret per subscription.
@@ -94,6 +97,7 @@ There is no separate backoff retry of one payload described here. Timeouts and r
 - The checker accepts a known body and secret and rejects a one-byte change.
 - A duplicated delivery creates one inbox row and one state change.
 - A redelivery after a sender timeout, where the first attempt was stored and applied but the 2xx never arrived, returns 2xx and repeats no side effect: one fulfillment, one email, one stock decrement.
+- Two concurrent deliveries of the same event produce one inbox row, one apply, and one set of side effects; the losing request returns 2xx.
 - An older event received after a newer one does not downgrade a paid order.
 - A wrong amount does not mark the order paid.
 - Stopping the database makes the handler return a retryable status and, after recovery, the redelivered event still applies once.

@@ -39,6 +39,22 @@
           "X-WC-Webhook-Delivery-ID"
         ]
       }
+    },
+    {
+      "id": "concurrent-duplicate-delivery",
+      "task": "The same order.paid webhook is delivered twice at the same moment to two app servers. Each handler looks up the event in the inbox, finds nothing, and applies it, so the order is fulfilled twice. Make the handler idempotent under concurrent duplicates.",
+      "expects": {
+        "must_include": [
+          "unique key",
+          "ON CONFLICT",
+          "concurrent",
+          "2xx"
+        ],
+        "must_not_include": [
+          "X-WC-Webhook-Delivery-ID",
+          "lock the whole table"
+        ]
+      }
     }
   ]
 }

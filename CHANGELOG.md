@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- A `concurrent-duplicate-delivery` eval task and worked example for `order-and-webhook-reliability`. The same event reaches two servers at once, and a check-then-insert lets both apply it. The answer must claim the event with an atomic insert on the unique key, such as `ON CONFLICT DO NOTHING`, apply it once, and return 2xx to the other request. The skill explains this case, its verification list and gotchas cover it, and the rule has a matching line. Suggested by a reader on Dev.to.
+
 ## [0.3.3] - 2026-11-04
 
 ### Fixed
