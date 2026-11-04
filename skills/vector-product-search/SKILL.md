@@ -4,7 +4,7 @@ description: "Add vector retrieval beside lexical product search, with one embed
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 # Vector product search

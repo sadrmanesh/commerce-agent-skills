@@ -4,7 +4,7 @@ description: "Review and implement WordPress plugin security: capabilities, nonc
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 # WordPress plugin security

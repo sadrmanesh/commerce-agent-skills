@@ -4,7 +4,7 @@ description: "Build and change WooCommerce plugins with hooks, CRUD data stores,
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 # WooCommerce plugin development

@@ -4,7 +4,7 @@ description: "Build a Shopify app with the configured Admin API version, session
 license: MIT
 metadata:
   author: Naser Sadrmanesh
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 # Shopify app development
