@@ -14,6 +14,17 @@ export function availableAt(location, sku) {
 }
 
 /**
+ * Reserves quantity units of sku in levels as one check-and-set step, so nothing can run
+ * between reading what is free and writing the new reserved count. Returns false and
+ * changes nothing when fewer units are free. A database version is one conditional UPDATE.
+ */
+export function reserve(levels, sku, quantity) {
+  if (availableAt({ levels }, sku) < quantity) return false;
+  levels[sku] = { ...levels[sku], reserved: (levels[sku].reserved ?? 0) + quantity };
+  return true;
+}
+
+/**
  * Returns { allocations: [{ sku, location, quantity }], shortfalls: [{ sku, quantity }], locations }.
  * Never allocates more than a location has available.
  */
@@ -27,7 +38,10 @@ export function allocateOrder(order, stock) {
     if (!Number.isInteger(line.quantity) || line.quantity <= 0) throw new Error(`${line.sku}: quantity must be a positive whole number`);
   }
 
-  const single = eligible.find((location) => lines.every((line) => availableAt(location, line.sku) >= line.quantity));
+  // Sum repeated SKUs so two lines for the same item cannot each pass the check alone.
+  const totals = new Map();
+  for (const line of lines) totals.set(line.sku, (totals.get(line.sku) ?? 0) + line.quantity);
+  const single = eligible.find((location) => [...totals].every(([sku, quantity]) => availableAt(location, sku) >= quantity));
   if (single) {
     const allocations = lines.map((line) => ({ sku: line.sku, location: single.location, quantity: line.quantity }));
     return { allocations, shortfalls: [], locations: [single.location] };
@@ -48,7 +62,7 @@ export function allocateOrder(order, stock) {
       if (free === 0) continue;
       const take = Math.min(free, needed);
       allocations.push({ sku: line.sku, location: location.location, quantity: take });
-      levels[line.sku] = { ...levels[line.sku], reserved: (levels[line.sku].reserved ?? 0) + take };
+      reserve(levels, line.sku, take);
       used.add(location.location);
       needed -= take;
     }

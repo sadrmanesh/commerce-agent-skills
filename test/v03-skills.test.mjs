@@ -6,7 +6,7 @@ import {
   verifyStripeSignature,
 } from "../skills/stripe-payments/scripts/verify-stripe-signature.mjs";
 import { checkVerify, convertIranianAmount } from "../skills/iranian-payment-gateways/scripts/check-verify.mjs";
-import { allocateOrder, availableAt } from "../skills/inventory-and-multi-warehouse/scripts/allocate-stock.mjs";
+import { allocateOrder, availableAt, reserve } from "../skills/inventory-and-multi-warehouse/scripts/allocate-stock.mjs";
 import { resolvePrice } from "../skills/b2b-pricing/scripts/resolve-price.mjs";
 import { checkImportRows } from "../skills/catalog-import-and-migration/scripts/check-import-rows.mjs";
 import { checkWebVitals, rate } from "../skills/storefront-performance/scripts/check-web-vitals.mjs";
@@ -70,6 +70,53 @@ test("stock allocation prefers one location and never oversells", () => {
   assert.deepEqual(short.shortfalls, [{ sku: "MUG", quantity: 3 }]);
   assert.equal(allocateOrder({ destination: "FR", lines: [{ sku: "MUG", quantity: 1 }] }, STOCK).shortfalls[0].quantity, 1);
   assert.throws(() => allocateOrder({ lines: [{ sku: "MUG", quantity: 0 }] }, STOCK), /positive whole number/);
+});
+
+test("stock allocation sums repeated lines for the same SKU", () => {
+  const order = { destination: "DE", lines: [{ sku: "MUG", quantity: 3 }, { sku: "MUG", quantity: 3 }] };
+  const result = allocateOrder(order, STOCK);
+  for (const location of STOCK) {
+    const taken = result.allocations.filter((a) => a.location === location.location).reduce((sum, a) => sum + a.quantity, 0);
+    assert.ok(taken <= availableAt(location, "MUG"), `${location.location} oversold: ${taken}`);
+  }
+  assert.deepEqual(result.shortfalls, []);
+  assert.deepEqual(result.locations.sort(), ["berlin", "hamburg"]);
+});
+
+// Two checkouts race for the last unit. Each awaits between steps so the other can run.
+async function raceForLastUnit(reserveOne) {
+  const levels = { MUG: { onHand: 1, reserved: 0 } };
+  const results = await Promise.all([reserveOne(levels), reserveOne(levels)]);
+  return { results, reserved: levels.MUG.reserved };
+}
+
+const tick = () => new Promise((resolve) => setImmediate(resolve));
+
+async function atomicReserve(levels) {
+  await tick();
+  return reserve(levels, "MUG", 1);
+}
+
+// The broken version: read what is free, yield, then write. This is the bug the real one prevents.
+async function readThenWriteReserve(levels) {
+  const free = availableAt({ levels }, "MUG");
+  await tick();
+  if (free < 1) return false;
+  levels.MUG = { ...levels.MUG, reserved: levels.MUG.reserved + 1 };
+  return true;
+}
+
+test("two concurrent checkouts for the last unit: one reserves, the other is refused", async () => {
+  const { results, reserved } = await raceForLastUnit(atomicReserve);
+  assert.deepEqual(results.sort(), [false, true]);
+  assert.equal(reserved, 1);
+});
+
+test("the last-unit race test catches a non-atomic reserve", async () => {
+  // If this stops overselling, the test above no longer proves anything.
+  const { results, reserved } = await raceForLastUnit(readThenWriteReserve);
+  assert.deepEqual(results, [true, true]);
+  assert.equal(reserved, 2);
 });
 
 const LISTS = [

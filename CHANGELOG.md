@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- `allocate-stock.mjs` could oversell when an order had two lines for the same SKU. The one-location check looked at each line alone, so two lines of 3 both fit a location with 4 free. It now sums quantities per SKU first.
+
+### Added
+
+- `reserve()` in `allocate-stock.mjs`, a check-and-set step that reserves stock only when enough is free. The allocator uses it.
+- Tests for two concurrent checkouts racing for the last unit, plus a test that runs the same race against a read-then-write reserve and expects it to oversell, so the race test shows it can fail. Removing the stock decrement, the availability check, or the per-SKU sum now fails the suite; before this change, removing the decrement still passed.
+
 ## [0.3.2] - 2026-10-31
 
 ### Added
